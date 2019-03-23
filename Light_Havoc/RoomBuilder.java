@@ -192,10 +192,14 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		filler.close();
 	}
 
-	public void open() {
+	public void openRoom() {
 		BufferedReader get = new BufferedReader(new FileReader("rooms/arena.txt"));
 
-		for(int i = 0; i < )
+		for (int i = 0; i < (int)(roomStarts[roomNum][1] * rH)) {
+			get.readLine();
+		}
+		String line;
+		for (int i = 0; i < rH)
 	}
 
     public void writeMap() {
