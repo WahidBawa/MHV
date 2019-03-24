@@ -152,7 +152,7 @@ public class World {
 
 
 	public void moveEnemies() {
-		double spawnChance = Math.max(10, 11 - kills);
+		double spawnChance = Math.max(10, 100 - kills);
 		if ((int)(Math.random()*spawnChance) == 0) {
 			double x, y;
 			while (true) {
