@@ -7,6 +7,8 @@ import java.io.*;
 import javax.imageio.*;
 
 import java.awt.image.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 
 public class World {
 
@@ -16,6 +18,7 @@ public class World {
 	// 6 - 22 WALLTILES
 
 	private Player player;
+	private BufferedImage playerPic;
 	private ArrayList<Projectile> projectiles;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<util.Rectangle> walls;
@@ -29,6 +32,10 @@ public class World {
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
 		walls = new ArrayList<util.Rectangle>();
+
+		try {
+			 playerPic = ImageIO.read(new File("playerPic.png"));
+		} catch (IOException e) {System.out.println("Image not found");}
 	}
 
 	public void initTiles() {
@@ -63,7 +70,7 @@ public class World {
 		}
 	}
 
-	public void render(Graphics g) {
+	public void render(Graphics g, double ang) {
 
 		for (int i = (player.getIntY() - 300) / 64; i < (player.getIntY() - 300) / 64 + 11; i++) {
 			for (int j = (player.getIntX() - 400) / 64; j < (player.getIntX() - 400) / 64 + 16; j++) {
@@ -85,6 +92,8 @@ public class World {
 				g.fillOval(proj.getIntX() - player.getIntX() + 400 - proj.getRadius() / 2, proj.getIntY() - player.getIntY() + 300 - proj.getRadius() / 2, proj.getRadius(), proj.getRadius());
 			}
 		}
+
+		g.drawImage(rotateBuffered(playerPic, ang + Math.PI / 2, 32, 32), 400 - 32, 300 - 32, null);
 	}
 
 	public void moveEnemies() {
@@ -130,4 +139,13 @@ public class World {
 			}
 		}
 	}
+
+	public BufferedImage rotateBuffered(BufferedImage before, double a, int xrot, int yrot) {	
+    	
+    	AffineTransform tx = AffineTransform.getRotateInstance(a, xrot, yrot);
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+	    BufferedImage after = op.filter(before, null);
+
+		return after;
+    }
 }
