@@ -131,6 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angle: 0
+  dist: 0
+  pewing: 0
 --- !u!1001 &320940790
 PrefabInstance:
   m_ObjectHideFlags: 0
