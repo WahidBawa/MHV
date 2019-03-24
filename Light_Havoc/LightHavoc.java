@@ -263,8 +263,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	} catch (IOException e) {
     		System.out.println("File Error");
     	}
->>>>>>> c502748d99e4469d275f0ff7e40f8a6ea5f8a948:Light_Havoc/RoomBuilder.java
-    	
     } 
 
 	public void keyTyped(KeyEvent e) {
