@@ -18,13 +18,48 @@ public class World {
 	private ArrayList<Projectile> projectiles;
 	private ArrayList<Enemy> enemies;
 
+	private ArrayList<String> imageFiles;
+	private BufferedImage[] tiles;
+
 	public World() {
 		player = new Player(worldWidth * 64 / 2, worldHeight * 64 / 2);
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
 	}
 
+	public void initTiles() {
+		Filefetcher imageGetter = new Filefetcher();
+		imageFiles = imageGetter.showFiles(System.getProperty("user.dir") + "/environment");
+		tiles = new BufferedImage[imageFiles.size()];
+		for (int i = 0; i < imageFiles.size(); i++) {
+			try {
+			    tiles[i] = ImageIO.read(new File("environment/" + imageFiles.get(i)));
+
+			} catch (IOException e) {System.out.println("Image not found");}
+		}
+	}
+
 	public void render(Graphics g) {
+		BufferedReader get = null;
+		try {
+			get = new BufferedReader(new FileReader("rooms/arena.txt"));
+		
+
+			for (int i = 0; i < (player.getIntY() - 300) / 64 - 1; i++) {
+				get.readLine();
+			}
+			String line;
+			for (int i = 0; i < 12; i++) {
+				line = get.readLine();
+				for (int j = (player.getIntX() - 400) / 64; j < (player.getIntX() - 400) / 64 + 16; j++) {
+					g.drawImage(tiles[(int)(line.charAt(j) - 32)], j * 64 - player.getIntX() + 400, (((player.getIntY() - 300) / 64 - 1 + i) * 64 - player.getIntY() + 300), null);
+					//System.out.println((j * 64 - player.getIntX() + 400) + " " + (((player.getIntY() - 300) / 64 - 1 + i) * 64 - player.getIntY() + 300));
+				}
+			}
+		}  catch (IOException e) {
+			System.out.println("File error");
+		}
+
 		for (int i = projectiles.size() - 1; i >= 0; i--) {
 			Projectile proj = projectiles.get(i);
 			Color c = null;
@@ -55,5 +90,9 @@ public class World {
 		for (Projectile proj : toAdd) {
 			projectiles.add(proj);
 		}
+	}
+
+	public void movePlayer(double dx, double dy) {
+		player.move(dx, dy);
 	}
 }

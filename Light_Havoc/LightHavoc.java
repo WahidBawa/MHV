@@ -54,7 +54,6 @@ public class LightHavoc extends JFrame implements ActionListener {
     public static void main(String[] args) {
 		LightHavoc frame = new LightHavoc();
     }
-
 }
 
 class GamePanel extends JPanel implements MouseListener, KeyListener{
@@ -62,9 +61,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 	private boolean[] keys, mb;
 	private int importTick;
 	private Point screenPos;
-
-	private ArrayList<String> imageFiles;
-	private BufferedImage[] tiles;
 
 	private double playerAng;
 	private String gunClass;
@@ -84,19 +80,11 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		screenPos = new Point(0, 0);
 
 		world = new World();
-
-		Filefetcher imageGetter = new Filefetcher();
-		imageFiles = imageGetter.showFiles(System.getProperty("user.dir") + "/environment");
-		tiles = new BufferedImage[imageFiles.size()];
-		for (int i = 0; i < imageFiles.size(); i++) {
-			try {
-			    tiles[i] = ImageIO.read(new File("environment/" + imageFiles.get(i)));
-
-			} catch (IOException e) {System.out.println("Image not found");}
-		}
+		world.initTiles();
 
 		playerAng = - Math.PI / 2;
 		gunClass = "rifle";
+
 	}
 
     public void refresh(int myTick, Point pos){ 
@@ -104,6 +92,22 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	importTick = myTick;
     	if (keys[KeyEvent.VK_ESCAPE]) {
     		System.exit(0);
+    	}
+
+    	if (keys[KeyEvent.VK_W]) {
+    		world.movePlayer(0, -10);
+    	}
+
+    	if (keys[KeyEvent.VK_S]) {
+    		world.movePlayer(0, 10);
+    	}
+
+    	if (keys[KeyEvent.VK_D]) {
+    		world.movePlayer(10, 0);
+    	}
+
+    	if (keys[KeyEvent.VK_A]) {
+    		world.movePlayer(-10, 0);
     	}
 	}
 

@@ -32,7 +32,6 @@ public class Projectile {
 	public void move() {
 		ox = x;
 		oy = y;
-		System.out.println(vel);
 		x += Math.cos(traj) * vel;
 		y += Math.sin(traj) * vel;
 	}
