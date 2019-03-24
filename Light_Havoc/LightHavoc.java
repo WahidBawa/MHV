@@ -142,7 +142,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	g.fillRect(0, 600, 1000, 200);
 
     	g.setColor(Color.RED);
-    	g.drawOval(400 - 20, 300 - 20, 40, 40);
     	g.drawRect(500 - 50, 600, 100, 200);
     }
 

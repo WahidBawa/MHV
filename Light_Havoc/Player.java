@@ -16,10 +16,11 @@ public class Player extends Character{
 	public void setY(double y) { this.y = y; }
 	public int getIntX() { return (int)x; }
 	public int getIntY() { return (int)y; }
+	public Weapon getWeapon() {return weapon;}
 
 	public Projectile[] useWeapon(double ang) {
 		if (weapon instanceof Rifle) {
-			return ((Rifle)weapon).use(ang, x, y);
+			return ((Rifle)weapon).use(ang, x + (int)(Math.cos(ang + Math.PI / 4) * 32 * Math.sqrt(2)), y + (int)(Math.sin(ang + Math.PI / 4) * 32 * Math.sqrt(2)));
 		} else {
 			return null;
 		}
