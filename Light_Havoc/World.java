@@ -25,7 +25,7 @@ public class World {
 	private int[][] map;
 
 	public World() {
-		player = new Player(worldWidth * 64 / 2, worldHeight * 64 / 2);
+		player = new Player(3106, 1610);
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
 		walls = new ArrayList<util.Rectangle>();
