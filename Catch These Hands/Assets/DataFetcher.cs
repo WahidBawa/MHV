@@ -22,7 +22,7 @@ public class DataFetcher : MonoBehaviour
         pitch = (middle.y - palm.y) / (middle.z - palm.z);
         roll = (pinky.y - thumb.y) / (pinky.x - thumb.x);
 
-        Debug.Log("PITCH: " + pitch + " ROLL:" + roll);
+        //Debug.Log("PITCH: " + pitch + " ROLL:" + roll);
 
         //Debug.Log(middle.x * 100);
         //foreach (Transform child in this.transform)
