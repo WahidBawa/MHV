@@ -81,6 +81,9 @@ public class LightHavoc extends JFrame implements ActionListener {
 			if(source == myTimer){
 				++myTick;
 			}
+            if (World.player.health <= 1) {
+                cLayout.show(cards, "title");
+            }
 		}
 
 		if(source == buttonList.get(0)){ 
