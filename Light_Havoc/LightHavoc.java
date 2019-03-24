@@ -67,11 +67,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
 	private World world;
 
-	private final double[][] roomStarts = new double[][] {{0, 0.5}, {0, 3.5}, {1, 0}, {1, 1}, {1, 3}, 
-														{1, 4}, {1.5, 2}, {2, 0.5}, {2, 3.5}, {2.5, 1.5}, 
-														{2.5, 2.5}, {3, 0.5}, {3, 3.5}, {3.5, 2}, {4, 0}, 
-														{4, 1}, {4, 3}, {4, 4}, {5, 0.5}, {5, 3.5}};
-
 	public GamePanel(){
 		addKeyListener(this);
 		addMouseListener(this);
@@ -84,7 +79,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
 		playerAng = - Math.PI / 2;
 		gunClass = "rifle";
-;
 	}
 
     public void refresh(int myTick, Point pos){ 
@@ -119,7 +113,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
     	world.moveProjectiles();
 
-    	g.setColor(Color.WHITE);
+    	g.setColor(Color.BLACK);
     	g.fillRect(0, 0, 800, 600);
 
     	if (m.x > 500 + 50) {playerAng += Math.PI / 150;}
