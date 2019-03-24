@@ -76,8 +76,8 @@ public class World {
 		}
 
 		for (int i = (player.getIntY() - 300) / 64; i < (player.getIntY() - 300) / 64 + 11; i++) {
-			for (int j = (player.getIntX() - 400) / 64; j < (player.getIntX() - 400) / 64 + 17; j++) {
-				if (i < 0 || j < 0 || j > 16 * 6 || i > 5 * 10) {
+			for (int j = (player.getIntX() - 400) / 64; j < (player.getIntX() - 400) / 64 + 16; j++) {
+				if (i < 0 || j < 0 || j >= 16 * 6 || i >= 5 * 10) {
 					g.setColor(Color.BLACK);
 					g.fillRect(j * 64 - player.getIntX() + 400, i * 64 - player.getIntY() + 300, 64, 64);
 				} else {
