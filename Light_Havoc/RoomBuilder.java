@@ -223,7 +223,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		}
 
 	}
-	
+
     public void writeMap() {
     	try {
     		BufferedReader firstGet = new BufferedReader(new FileReader("rooms/arena.txt"));
@@ -233,23 +233,21 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     		int counter = 0;
 
     		while ((line = firstGet.readLine()) != null ) {
-    			System.out.println(counter + "." + ((int)(roomStarts[roomNum][1] * rH)) + "." + ((int)(roomStarts[roomNum][1] * rH) + rH - 1) );
-    			if ((int)(roomStarts[roomNum][1] * rH) <= counter && (int)(roomStarts[roomNum][1] * rH) + rH - 1 >= counter) {
-    				//System.out.println(line.length());
-    				String bef = line.substring(0, (int)(roomStarts[roomNum][0] * rW));
-    				String aft = line.substring((int)(roomStarts[roomNum][0] * rW) + rW - 1, line.length() - 1);
-    				String mid = "";
-
-    				for (int i = 0; i < rW; i++) {
-    					System.out.println(counter + " " + (i) + " " + ((int)(roomStarts[roomNum][1] * rH) + counter));
-    					mid += (char)(room[i][counter - (int)(roomStarts[roomNum][1] * rH)] + 32);
-    					//mid += "" + roomNum;
-
+    			//System.out.println(counter + "." + ((int)(roomStarts[roomNum][1] * rH)) + "." + ((int)(roomStarts[roomNum][1] * rH) + rH - 1) );
+    			if ((int)(roomStarts[roomNum][1] * rH) <= counter && counter <= (int)(roomStarts[roomNum][1] * rH) + rH - 1) {
+    				String newLine = "";
+    				for (int i = 0; i < 6 * rW; i++) {
+    					if (roomStarts[roomNum][0] * rW <= i && i < (roomStarts[roomNum][0] + 1) * rW) {
+    						System.out.println(i + " " + (roomStarts[roomNum][0]) * rW);
+    						newLine += (char)(room[i - (int)(roomStarts[roomNum][0] * rW)][counter - (int)(roomStarts[roomNum][1] * rH)] + 32);
+    					} else {
+    						newLine += line.charAt(i);
+    					}
     				}
-    				System.out.println(bef + "." + mid + "." + aft);
 
-    				line = bef + mid + aft;
+    				line = newLine;
     			}
+
     			lines[counter] = line;
     			counter += 1;
     		}
