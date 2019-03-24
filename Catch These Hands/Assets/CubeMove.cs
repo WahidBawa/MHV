@@ -31,13 +31,16 @@ public class CubeMove : MonoBehaviour
         if (rightHand != null)
         {
             Rotation data = rightHand.GetComponent<Rotation>();
+
             this.transform.Rotate(0, (float)(data.angle), 0);
             s += data.angle;
+            s += " " + data.pewing;
         }
         else
         {
-            s += "0";
+            s += "0 0";
         }
+
         System.IO.File.WriteAllText("../Light_Havoc/tmp.tmp", s);
 
     }

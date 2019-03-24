@@ -19,7 +19,7 @@ public class LightHavoc extends JFrame implements ActionListener {
 
 	javax.swing.Timer myTimer;
 	GamePanel game;
-	JPanel titlePage;
+	JPanel titlePage, instr;
 
 	private int myTick; 
 
@@ -34,20 +34,36 @@ public class LightHavoc extends JFrame implements ActionListener {
 		myTimer = new javax.swing.Timer(10, this);	 // trigger every 10 ms
 		myTimer.start();
 
+		buttonList = new ArrayList<JButton>();
+
 		titlePage = new JPanel();
 		titlePage.setLayout(null);
 		
-		addButton("Play", titlePage, buttonList, 400, 460, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this); //adding buttons and text to all the non game cards
-		addButton("Instructions", titlePage, buttonList, 400, 570, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
-		addButton("Quit", titlePage, buttonList, 400, 680, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
-		addImage("pics/gir.png", titlePage, 0, -50, 1200, 300);
-		addImage("pics/titleBack.jpg", titlePage, 0, 0, 1200, 850);
+		addButton("Play", titlePage, buttonList, 300, 360, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this); //adding buttons and text to all the non game cards
+		addButton("Instructions", titlePage, buttonList, 300, 470, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
+		addButton("Quit", titlePage, buttonList, 300, 580, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
+		addImage("titlePic.png", titlePage, 0, 0, 1000, 800);
+
+		instr = new JPanel();
+		instr.setLayout(null);
+
+		addButton("Back", instr, buttonList, 50, 650, 150, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
+		String[] lines = new String[] {"Hold your hands out flat above the sensor. if hands are not detected, the game will pause", 
+										"Rotate your torso and hands to rotate the player",
+										"Bank your left hand side to side and front to back to move the player",
+										"Hold your right hand in the shape of a gun and bend your pointer finger to shoot",
+										"Survive as long as you can!"};
+		for (int i = 0; i < lines.length; i++) {
+			addLabel(lines[i], instr, 75, 200 + i * (400 / lines.length), 900, 400 / lines.length, 18, "Cooper Black", Color.WHITE);
+		}
+
+		addImage("purpRect.png", instr, 50, 200, 900, 400);
+		addImage("titlePic.png", instr, 0, 0, 1000, 800);
 
 		cards = new JPanel(cLayout);
 		cards.add(titlePage, "title");
 		cards.add(game, "game");
-
-		buttonList = new ArrayList<JButton>();
+		cards.add(instr, "instructions");
 				
 		add(cards);
 		setResizable(false);
@@ -64,7 +80,30 @@ public class LightHavoc extends JFrame implements ActionListener {
 			if(source == myTimer){
 				++myTick;
 			}
-		}	
+		}
+
+		if(source == buttonList.get(0)){ 
+		    cLayout.show(cards,"game");
+		    game.reset();
+			myTimer.start();
+		    game.requestFocus();
+		}
+
+		if(source == buttonList.get(1)){ 
+		    cLayout.show(cards,"instructions");
+		}
+
+		if(source == buttonList.get(2)){ 
+		    System.exit(0);
+		}
+
+		try {
+			if(source == buttonList.get(3)){ 
+			    cLayout.show(cards,"title");
+			}
+		} catch(Exception e) {
+			System.out.print("");
+		}
 	}
 
     public static void main(String[] args) {
@@ -112,7 +151,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 	private Point screenPos;
 
 	private double playerAng, angle;
-
+    private boolean pewing, ppewing;
 	private String gunClass;
 
 	private World world;
@@ -134,12 +173,33 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		
 	}
 
+	public void reset(){
+		addKeyListener(this);
+		addMouseListener(this);
+		keys = new boolean[KeyEvent.KEY_LAST+1];
+		mb = new boolean[3];
+		screenPos = new Point(0, 0);
+
+		playerAng = - Math.PI / 2;
+		gunClass = "rifle";
+
+		world = new World(gunClass);
+		world.initTiles();
+
+		
+	}
+
     public void refresh(int myTick, Point pos){ 
         angle = 0;
         try {
             double[] a = new ReadFile("tmp.tmp").getArray();
             playerRotateVals = new double[] {a[0], a[1]};
-            angle = -a[2] / 60;
+            angle = -a[2] / 30;
+            ppewing = pewing;
+            pewing = a[3] == 0.0 ? false : true;
+            if (ppewing != pewing && pewing) {
+                world.useWeapon(playerAng);
+            }
             // System.out.println(Arrays.toString(playerRotateVals));
         } catch (Exception e) {}
 
