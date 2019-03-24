@@ -280,3 +280,6 @@ C:\Users\wahid\Documents\GitHub\MHV\Catch These Hands\obj\Debug\Assembly-CSharp.
 C:\Users\wahid\Documents\GitHub\MHV\Catch These Hands\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\wahid\Documents\GitHub\MHV\Catch These Hands\obj\Debug\Assembly-CSharp.dll
 C:\Users\wahid\Documents\GitHub\MHV\Catch These Hands\obj\Debug\Assembly-CSharp.pdb
+C:\Users\wahid\Documents\GitHub\MHV\Catch These Hands\Temp\bin\Debug\Boo.Lang.dll
+C:\Users\wahid\Documents\GitHub\MHV\Catch These Hands\Temp\bin\Debug\UnityEditor.UI.dll
+C:\Users\wahid\Documents\GitHub\MHV\Catch These Hands\Temp\bin\Debug\UnityEditor.UI.xml
