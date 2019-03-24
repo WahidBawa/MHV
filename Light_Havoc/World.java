@@ -19,7 +19,7 @@ public class World {
 
 	private Player player;
 	private BufferedImage playerPic;
-	private String gunClass;
+	public static String gunClass;
 	private ArrayList<Projectile> projectiles;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<util.Rectangle> walls;
@@ -32,7 +32,7 @@ public class World {
 	public World(String gClass) {
 
 		player = new Player(3106, 1610);
-		gunClass = gClass;
+		// gunClass = gClass;
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
 		walls = new ArrayList<util.Rectangle>();

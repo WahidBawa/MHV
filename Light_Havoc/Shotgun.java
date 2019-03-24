@@ -9,7 +9,7 @@ public class Shotgun extends Weapon{
 	private Random rand = new Random();
 	private int amountOfBullets;
 	public Shotgun (int tin) {
-
+		World.gunClass = "Shotgun";
 		tier = tin;
 		type = "Shotgun";
 		damage = DAMAGE[tier];

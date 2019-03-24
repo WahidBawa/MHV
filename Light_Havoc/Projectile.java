@@ -32,4 +32,8 @@ public class Projectile {
 		x += Math.cos(traj) * vel;
 		y += Math.sin(traj) * vel;
 	}
+
+	public void getDamage(){
+		return damage;
+	}
 }
