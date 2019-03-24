@@ -93,7 +93,7 @@ public class World {
 			
 			if (proj.getType().equals("bullet")) {
 				g.setColor(Color.BLACK);
-				g.fillOval(proj.getIntX() - player.getIntX() + 400 - proj.getRadius() / 2, proj.getIntY() - player.getIntY() + 300 - proj.getRadius() / 2, proj.getRadius(), proj.getRadius());
+				g.fillOval(proj.getIntX() - player.getIntX() + 400 - 8 / 2, proj.getIntY() - player.getIntY() + 300 - 8 / 2, 8, 8);
 			}
 		}
 
@@ -171,14 +171,14 @@ public class World {
 			Projectile proj = projectiles.get(i);
 			proj.move();
 			for (util.Rectangle w : walls) {
-				if (w.intersects(proj.getX() - proj.getRadius(), proj.getY() - proj.getRadius(), proj.getRadius(), proj.getRadius())) {
+				if (w.intersects(proj.getX() - 8, proj.getY() - 8, 8, 8)) {
 					projectiles.remove(i);
 					break;
 				}
 			}
 			for (int en = enemies.size() - 1; en >= 0; en--) {
 				Enemy e = enemies.get(en);
-				if ((new util.Rectangle(e.getX()-32, e.getY()-32, 64,64)).intersects(proj.getX() - proj.getRadius(), proj.getY() - proj.getRadius(), proj.getRadius(), proj.getRadius())) {
+				if ((new util.Rectangle(e.getX()-32, e.getY()-32, 64,64)).intersects(proj.getX() - 8, proj.getY() - 8, 8, 8)) {
 					projectiles.remove(i);
 					enemies.remove(en);
 					break;
