@@ -12,4 +12,14 @@ public class World {
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
 	}
+
+	//doEnemies here
+
+	public void doProjectiles() {
+		for (int i = projectiles.size() - 1; i >= 0; i--) {
+			Projectile proj = projectiles.get(i);
+
+			proj.move();
+		}
+	}
 }
