@@ -19,7 +19,7 @@ public class LightHavoc extends JFrame implements ActionListener {
 
 	javax.swing.Timer myTimer;
 	GamePanel game;
-	JPanel titlePage;
+	JPanel titlePage, instr;
 
 	private int myTick; 
 
@@ -34,20 +34,23 @@ public class LightHavoc extends JFrame implements ActionListener {
 		myTimer = new javax.swing.Timer(10, this);	 // trigger every 10 ms
 		myTimer.start();
 
+		buttonList = new ArrayList<JButton>();
+
 		titlePage = new JPanel();
 		titlePage.setLayout(null);
 		
-		addButton("Play", titlePage, buttonList, 400, 460, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this); //adding buttons and text to all the non game cards
-		addButton("Instructions", titlePage, buttonList, 400, 570, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
-		addButton("Quit", titlePage, buttonList, 400, 680, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
-		addImage("pics/gir.png", titlePage, 0, -50, 1200, 300);
-		addImage("pics/titleBack.jpg", titlePage, 0, 0, 1200, 850);
+		addButton("Play", titlePage, buttonList, 300, 360, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this); //adding buttons and text to all the non game cards
+		addButton("Instructions", titlePage, buttonList, 300, 470, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
+		addButton("Quit", titlePage, buttonList, 300, 580, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
+		addImage("titlePic.png", titlePage, 0, 0, 1000, 800);
+
+		instr = new JPanel();
+		instr.setLayout(null);
 
 		cards = new JPanel(cLayout);
 		cards.add(titlePage, "title");
 		cards.add(game, "game");
-
-		buttonList = new ArrayList<JButton>();
+		cards.add(instr, "instructions");
 				
 		add(cards);
 		setResizable(false);
@@ -64,6 +67,21 @@ public class LightHavoc extends JFrame implements ActionListener {
 			if(source == myTimer){
 				++myTick;
 			}
+		}
+
+		if(source == buttonList.get(0)){ 
+		    cLayout.show(cards,"game");
+		    game.reset();
+			myTimer.start();
+		    game.requestFocus();
+		}
+
+		if(source == buttonList.get(1)){ 
+		    cLayout.show(cards,"instructions");
+		}
+
+		if(source == buttonList.get(2)){ 
+		    System.exit(0);
 		}	
 	}
 
@@ -135,6 +153,22 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		
 	}
 
+	public void reset(){
+		addKeyListener(this);
+		addMouseListener(this);
+		keys = new boolean[KeyEvent.KEY_LAST+1];
+		mb = new boolean[3];
+		screenPos = new Point(0, 0);
+
+		playerAng = - Math.PI / 2;
+		gunClass = "rifle";
+
+		world = new World(gunClass);
+		world.initTiles();
+
+		
+	}
+
     public void refresh(int myTick, Point pos){ 
         angle = 0;
         try {
@@ -150,7 +184,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     		System.exit(0);
     	}
 
-        world.movePlayer(Math.min(6, Math.max(playerRotateVals[0] * 2, -6)), Math.min(6, Math.max(playerRotateVals[1] * 4, -6)));
+        //world.movePlayer(Math.min(6, Math.max(playerRotateVals[0] * 2, -6)), Math.min(6, Math.max(playerRotateVals[1] * 4, -6)));
 
     	if (keys[KeyEvent.VK_W]) {
     		world.movePlayer(0, -6);
