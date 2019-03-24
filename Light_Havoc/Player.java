@@ -6,8 +6,8 @@ public class Player extends Character{
 		x= xin;
 		y = yin;
 
-		// weapon = new Rifle(0);
-		weapon = new Shotgun(0);
+		weapon = new Rifle(0);
+		// weapon = new Shotgun(0);
 	}
 
 	public double getX() { return x; }
