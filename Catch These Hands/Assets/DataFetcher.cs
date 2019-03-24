@@ -5,7 +5,7 @@ using UnityEngine;
 public class DataFetcher : MonoBehaviour
 {
     Vector3 middle, palm, pinky, thumb;
-
+    public double pitch, roll;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +19,8 @@ public class DataFetcher : MonoBehaviour
         palm = this.transform.Find("palm").position;
         pinky = this.transform.Find("pinky").Find("bone3").position;
         thumb = this.transform.Find("thumb").Find("bone3").position;
-        double pitch = (middle.y - palm.y) / (middle.z - palm.z);
-        double roll = (pinky.y - thumb.y) / (pinky.x - thumb.x);
+        pitch = (middle.y - palm.y) / (middle.z - palm.z);
+        roll = (pinky.y - thumb.y) / (pinky.x - thumb.x);
 
         Debug.Log("PITCH: " + pitch + " ROLL:" + roll);
 
@@ -28,6 +28,7 @@ public class DataFetcher : MonoBehaviour
         //foreach (Transform child in this.transform)
         //{
         //}
+
 
     }
 }
