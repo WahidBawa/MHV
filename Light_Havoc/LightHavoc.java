@@ -40,11 +40,14 @@ public class LightHavoc extends JFrame implements ActionListener {
 		addButton("Play", titlePage, buttonList, 300, 360, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this); //adding buttons and text to all the non game cards
 		addButton("Instructions", titlePage, buttonList, 300, 470, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
 		addButton("Quit", titlePage, buttonList, 300, 580, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
-		addImage("titlePic.png", titlePage, 0, 0, 1000, 800);
+		addImage("menu_images/title.png", titlePage, 0, -250, 1000, 800);
+		addImage("menu_images/titlePic.png", titlePage, 0, 0, 1000, 800);
+
 
 		instr = new JPanel();
 		instr.setLayout(null);
 
+		addImage("menu_images/intr.png", instr, 0, -250, 1000, 800);
 		addButton("Back", instr, buttonList, 50, 650, 150, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
 		String[] lines = new String[] {"Hold your hands out flat above the sensor. if hands are not detected, the game will pause", 
 										"Rotate your torso and hands to rotate the player",
@@ -55,8 +58,8 @@ public class LightHavoc extends JFrame implements ActionListener {
 			addLabel(lines[i], instr, 75, 200 + i * (400 / lines.length), 900, 400 / lines.length, 18, "Cooper Black", Color.WHITE);
 		}
 
-		addImage("purpRect.png", instr, 50, 200, 900, 400);
-		addImage("titlePic.png", instr, 0, 0, 1000, 800);
+		addImage("menu_images/purpRect.png", instr, 50, 200, 900, 400);
+		addImage("menu_images/titlePic.png", instr, 0, 0, 1000, 800);
 
 		cards = new JPanel(cLayout);
 		cards.add(titlePage, "title");
