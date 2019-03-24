@@ -17,7 +17,7 @@ public class World {
 
 	// 6 - 22 WALLTILES
 
-	private Player player;
+	public static Player player;
 	private BufferedImage playerPic;
 	public static String gunClass;
 	private ArrayList<Projectile> projectiles;
@@ -152,7 +152,7 @@ public class World {
 
 
 	public void moveEnemies() {
-		double spawnChance = Math.max(20, 100 - kills*80);
+		double spawnChance = Math.max(10, 11 - kills);
 		if ((int)(Math.random()*spawnChance) == 0) {
 			double x, y;
 			while (true) {
