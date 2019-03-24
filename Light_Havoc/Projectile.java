@@ -1,12 +1,14 @@
 public class Projectile {
 
 	private int rad, range;
-	private double vel, traj, x, , ox, oy;
+	private double vel, traj, x, , ox, oy, sx, sy;
 	private String type;
 
 	public Projectile(double xin, double yin, double vin, double trin, Stirng tyin, double ranin, double radin) {
 		x = xin;
 		y = yin;
+		sx = xin;
+		sy = yin;
 		ox = 99999;
 		oy = 99999;
 
@@ -20,8 +22,11 @@ public class Projectile {
 
 	public double getX() { return x; }
 	public double getY() { return y; }
+	public double getSX() {return sx;}
+	public double getSY() {return sy;}
 	public int getIntX() { return (int)x; }
 	public int getIntY() { return (int)y; }
+	public int getRadius() {return rad;}
 
 	public void move() {
 		ox = x;

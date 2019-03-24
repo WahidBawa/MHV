@@ -68,8 +68,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
 	private double playerAng;
 	private String gunClass;
-	private Player 
-
 
 	private final double[][] roomStarts = new double[][] {{0, 0.5}, {0, 3.5}, {1, 0}, {1, 1}, {1, 3}, 
 														{1, 4}, {1.5, 2}, {2, 0.5}, {2, 3.5}, {2.5, 1.5}, 
@@ -93,7 +91,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 			} catch (IOException e) {System.out.println("Image not found");}
 		}
 
-		playerAng = 0.0;
+		playerAng = - Math.PI / 2;
 		gunClass = "rifle";
 	}
 
@@ -109,15 +107,10 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     public void paintComponent(Graphics g){
 
     	Point m = MouseInfo.getPointerInfo().getLocation();
-    	System.out.println(this.getLocation());
     	m.move(m.x - screenPos.x, m.y - screenPos.y);
 
     	g.setColor(Color.WHITE);
     	g.fillRect(0, 0, 800, 600);
-
-    	g.setColor(Color.RED);
-    	g.drawOval(400 - 20, 300 - 20, 40, 40);
-    	g.drawRect(500 - 50, 600, 100, 200);
 
     	if (m.x > 500 + 50) {playerAng += Math.PI / 150;}
     	else if (m.x < 500 - 50) {playerAng -= Math.PI / 100;}
@@ -127,6 +120,10 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	g.setColor(new Color(60, 0, 60));
     	g.fillRect(800, 0, 200, 800);
     	g.fillRect(0, 600, 1000, 200);
+
+    	g.setColor(Color.RED);
+    	g.drawOval(400 - 20, 300 - 20, 40, 40);
+    	g.drawRect(500 - 50, 600, 100, 200);
     } 
 
 	public void keyTyped(KeyEvent e) {
