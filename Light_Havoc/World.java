@@ -29,6 +29,8 @@ public class World {
 	private int[][] map;
 	private int kills;
 
+	private ArrayList<int[]> sources;
+
 	public World(String gClass) {
 
 		player = new Player(3106, 1610);
@@ -40,6 +42,9 @@ public class World {
 		try {
 			 playerPic = ImageIO.read(new File("playerPic.png"));
 		} catch (IOException e) {System.out.println("Image not found");}
+
+		sources = new ArrayList<int[]>();
+		sources.add(new int []{player.getIntX(), player.getIntY(), 100, 999999});
 	}
 
 	public void initTiles() {
@@ -105,6 +110,8 @@ public class World {
 
 		g.drawImage(rotateBuffered(player.getWeapon().getImage(), ang + Math.PI / 2, 32, 32), 400 - 32 + (int)(Math.cos(ang + Math.PI / 4) * 32 * Math.sqrt(2)), 300 - 32 + (int)(Math.sin(ang + Math.PI / 4) * 32 * Math.sqrt(2)), null);
 		g.drawImage(rotateBuffered(playerPic, ang + Math.PI / 2, 32, 32), 400 - 32, 300 - 32, null);
+
+		g.drawImage(getLightMask(), 0, 0, null);
 	}
 
 	public void drawUI(Graphics g) {
@@ -211,6 +218,75 @@ public class World {
 			}
 		}
 	}
+
+	public BufferedImage getLightMask() {
+		BufferedImage im = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = im.createGraphics();
+		g2.setColor(Color.BLACK);
+        g2.fillRect(0, 0, 800, 600);
+        
+		for (int i = sources.size() - 1; i >= 0; i--) {
+			int[] source = sources.get(i);
+			source[3] -= 1;
+			if (source[3]> 0) {
+				g2.setColor(new Color(254, 254, 254));
+				for (int j = source[0] - (int)player.getX() + 400 - source[2]; j < source[0] - (int)player.getX() + 400 + source[2]; j++) {
+					for (int k = source[1] - (int)player.getY() + 300 - source[2]; k < source[1] - (int)player.getY() + 300 + source[2]; k++) {
+						if(Math.hypot(source[0] - player.getX() + 400 - j, source[1] - player.getY() + 300 - k) <= source[2]) {
+							if (j >= 0 && k >= 0 && j < 800 && k < 600) {
+								im.setRGB(j, k, 16711422);
+							}
+						}
+					}
+				}
+			} else {
+				sources.remove(i);
+			}
+		}
+		g2.dispose();
+		return im;
+	}
+
+	public BufferedImage makeTransparent(BufferedImage source) {
+
+        Image image = makeColorTransparent(source, new Color(254, 254, 254));
+        BufferedImage transparent = imageToBufferedImage(image);
+        //ImageIO.write(transparent, "PNG", "test.png");
+        return transparent;
+
+    }
+
+    private static BufferedImage imageToBufferedImage(Image image) {
+
+        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = bufferedImage.createGraphics();
+        g2.drawImage(image, 0, 0, null);
+        g2.dispose();
+
+        return bufferedImage;
+
+    }
+
+    public static Image makeColorTransparent(BufferedImage im, final Color color) {
+        ImageFilter filter = new RGBImageFilter() {
+
+            // the color we are looking for... Alpha bits are set to opaque
+            public int markerRGB = color.getRGB() | 0xFF000000;
+
+            public final int filterRGB(int x, int y, int rgb) {
+                if ((rgb | 0xFF000000) == markerRGB) {
+                    // Mark the alpha bits as zero - transparent
+                    return 0x00FFFFFF & rgb;
+                } else {
+                    // nothing to do
+                    return rgb;
+                }
+            }
+        };
+
+        ImageProducer ip = new FilteredImageSource(im.getSource(), filter);
+        return Toolkit.getDefaultToolkit().createImage(ip);
+    }
 
 	public BufferedImage rotateBuffered(BufferedImage before, double a, int xrot, int yrot) {	
     	
