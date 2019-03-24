@@ -3,6 +3,7 @@ public class Projectile {
 	private int range;
 	private double vel, traj, x, y, ox, oy, sx, sy;
 	private String type;
+	private int damage;
 
 	public Projectile(double xin, double yin, double vin, double trin, String tyin, int damage) {
 		x = xin;
@@ -11,7 +12,7 @@ public class Projectile {
 		sy = yin;
 		ox = 99999;
 		oy = 99999;
-
+		this.damage = damage;
 		vel = vin;
 		traj = trin;
 
