@@ -13,6 +13,8 @@ public class Player extends Character{
 		// weapon = new Shotgun(0);
 	}
 
+	public void setWeapon(int n) {weapon = new Shotgun(n);}
+
 	public void heal() { health = Math.min(healthMax, health+0.01); }
 
 	public double getX() { return x; }

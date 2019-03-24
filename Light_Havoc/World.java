@@ -120,6 +120,8 @@ public class World {
 		//g.drawImage(getLightMask(), 0, 0, null);
 
 		player.drawHealthBar(g, player);
+
+		player.setWeapon(kills / 50);
 	}
 
 	public void drawUI(Graphics g) {
