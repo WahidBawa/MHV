@@ -11,17 +11,10 @@ public class ReadFile{ // this class will be used to read in a file
 	}
 
 	public double[] getArray(){ // this method will be used to get the file information as a String array
-		String[] variable_name = currLine.split(","); // returns the array after splitting the lines String
-		return new double[] {Double.parseDouble(variable_name[0]), Double.parseDouble(variable_name[1])};
+		String[] s;
+		s = currLine.split(" "); // returns the array after splitting the lines String
+		String[] variable_name = s[0].split(","); // returns the array after splitting the lines String
+		return new double[] {Double.parseDouble(variable_name[0]), Double.parseDouble(variable_name[1]), Double.parseDouble(s[1])};
 	}
 	
-	// public static void main(String[] args){
-	// 	// for (int i = 0; i < 200; i++) {
-	// 	while(true){
-			// try {
-			// 	System.out.println(Arrays.toString(new ReadFile("tmp.tmp").getArray()));
-			// } catch (Exception e) {}
-	// 	}
-	// 	// }
-	// }
 }

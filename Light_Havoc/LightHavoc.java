@@ -63,7 +63,8 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 	private int importTick;
 	private Point screenPos;
 
-	private double playerAng;
+	private double playerAng, angle;
+
 	private String gunClass;
 
 	private World world;
@@ -87,8 +88,11 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 	}
 
     public void refresh(int myTick, Point pos){ 
+        angle = 0;
         try {
-            playerRotateVals = new ReadFile("tmp.tmp").getArray();
+            double[] a = new ReadFile("tmp.tmp").getArray();
+            playerRotateVals = new double[] {a[0], a[1]};
+            angle = -a[2] / 60;
             // System.out.println(Arrays.toString(playerRotateVals));
         } catch (Exception e) {}
 
@@ -131,6 +135,8 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
     	if (m.x > 500 + 50) {playerAng += Math.PI / 110;}
     	else if (m.x < 500 - 50) {playerAng -= Math.PI / 110;}
+
+        playerAng += angle;
 
     	world.render(g, playerAng);
     	world.drawUI(g);    	
