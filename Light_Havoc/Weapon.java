@@ -2,10 +2,10 @@ import java.awt.image.*;
 
 public class Weapon {
 
-	public BufferedImage image;
-	private int tier;
-	private String type;
-	private final String[] names = new String[] {"Basic", "Handy", "Ultra", "Special", "Mayhem"};
+	protected BufferedImage image;
+	protected int tier;
+	protected String type;
+	protected final String[] names = new String[] {"Basic", "Handy", "Ultra", "Special", "Mayhem"};
 	
 	public Weapon() {}
 

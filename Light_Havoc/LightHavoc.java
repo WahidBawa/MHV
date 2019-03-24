@@ -15,8 +15,11 @@ public class LightHavoc extends JFrame implements ActionListener {
 	JPanel cards;
 	CardLayout cLayout = new CardLayout();
 
+	private ArrayList<JButton>buttonList;
+
 	javax.swing.Timer myTimer;
 	GamePanel game;
+	JPanel titlePage, instr;
 
 	private int myTick; 
 
@@ -31,8 +34,23 @@ public class LightHavoc extends JFrame implements ActionListener {
 		myTimer = new javax.swing.Timer(10, this);	 // trigger every 10 ms
 		myTimer.start();
 
+		buttonList = new ArrayList<JButton>();
+
+		titlePage = new JPanel();
+		titlePage.setLayout(null);
+		
+		addButton("Play", titlePage, buttonList, 300, 360, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this); //adding buttons and text to all the non game cards
+		addButton("Instructions", titlePage, buttonList, 300, 470, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
+		addButton("Quit", titlePage, buttonList, 300, 580, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
+		addImage("titlePic.png", titlePage, 0, 0, 1000, 800);
+
+		instr = new JPanel();
+		instr.setLayout(null);
+
 		cards = new JPanel(cLayout);
+		cards.add(titlePage, "title");
 		cards.add(game, "game");
+		cards.add(instr, "instructions");
 				
 		add(cards);
 		setResizable(false);
@@ -49,11 +67,59 @@ public class LightHavoc extends JFrame implements ActionListener {
 			if(source == myTimer){
 				++myTick;
 			}
+		}
+
+		if(source == buttonList.get(0)){ 
+		    cLayout.show(cards,"game");
+		    game.reset();
+			myTimer.start();
+		    game.requestFocus();
+		}
+
+		if(source == buttonList.get(1)){ 
+		    cLayout.show(cards,"instructions");
+		}
+
+		if(source == buttonList.get(2)){ 
+		    System.exit(0);
 		}	
 	}
 
     public static void main(String[] args) {
 		LightHavoc frame = new LightHavoc();
+    }
+
+    private static void addLabel(String text, Container container, int x, int y, int w, int h, int fontSize, String typeFace, Color textCol) { //adds a label
+        JLabel label = new JLabel(text);
+        label.setFont(new Font(typeFace, Font.PLAIN, fontSize));
+        label.setForeground(textCol);
+        label.setSize(w,h);
+		label.setLocation(x, y);
+
+        container.add(label);
+    }
+
+    public static void addImage(String fname, Container container, int x, int y, int w, int h) { 
+    	ImageIcon icon = new ImageIcon(fname);
+		JLabel label = new JLabel(icon);
+		label.setSize(w,h);
+		label.setLocation(x,y);
+		container.add(label);
+    }
+
+    private static void addButton(String text, Container container, ArrayList<JButton> blist, int x, int y, int w, int h, Color butCol,
+    								 int fontSize, String typeFace, Color textCol, LightHavoc lh) { 
+        JButton button = new JButton(text);
+        button.setFont(new Font(typeFace, Font.PLAIN, fontSize));
+        button.setForeground(textCol);
+        button.setBackground(butCol);
+        button.addActionListener(lh);
+
+		button.setSize(w, h);
+		button.setLocation(x, y);
+
+        container.add(button);
+        blist.add(button);
     }
 }
 
@@ -72,6 +138,22 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     public static double[] playerRotateVals;
 
 	public GamePanel(){
+		addKeyListener(this);
+		addMouseListener(this);
+		keys = new boolean[KeyEvent.KEY_LAST+1];
+		mb = new boolean[3];
+		screenPos = new Point(0, 0);
+
+		playerAng = - Math.PI / 2;
+		gunClass = "rifle";
+
+		world = new World(gunClass);
+		world.initTiles();
+
+		
+	}
+
+	public void reset(){
 		addKeyListener(this);
 		addMouseListener(this);
 		keys = new boolean[KeyEvent.KEY_LAST+1];
@@ -107,7 +189,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     		System.exit(0);
     	}
 
-        world.movePlayer(Math.min(6, Math.max(playerRotateVals[0] * 2, -6)), Math.min(6, Math.max(playerRotateVals[1] * 4, -6)));
+        //world.movePlayer(Math.min(6, Math.max(playerRotateVals[0] * 2, -6)), Math.min(6, Math.max(playerRotateVals[1] * 4, -6)));
 
     	if (keys[KeyEvent.VK_W]) {
     		world.movePlayer(0, -6);
@@ -142,7 +224,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	else if (m.x < 500 - 50) {playerAng -= Math.PI / 110;}
 
         playerAng += angle;
-
     	world.render(g, playerAng);
     	world.drawUI(g);    	
     } 
