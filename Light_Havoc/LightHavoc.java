@@ -157,6 +157,113 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
 	@Override
     public void paintComponent(Graphics g){
+    	g.setColor(Color.WHITE);
+    	g.fillRect(0, 0, 960, 640);
+    	g.setColor(Color.BLACK);
+    	for (int i = 0; i < rW + 1; i++) {
+    		g.fillRect(i * 64 - 2, 0, 4, rH * 64);
+    	}
+    	for (int i = 0; i < rH + 1; i++) {
+    		g.fillRect(0, i * 64 - 2, rW * 64, 4);
+    	}
+
+    	for (int i = 0; i < rW; i++) {
+	    	for (int j = 0; j < rH; j++) {
+	    		g.drawImage(tiles[room[i][j]], i * 64, j * 64, null);
+	    	}
+	    }
+
+    	Point m = MouseInfo.getPointerInfo().getLocation();
+    	g.drawImage(tiles[holding], m.x - 32, m.y - 64, null);
+
+    	g.setColor(Color.BLACK);
+    	g.drawString("RoomNum: " + roomNum, 50, 50);
+
+    } 
+
+    public void wipeArena() {
+    	String line = "";
+    	PrintWriter filler = null;
+    	for(int i = 0; i < 6 * rW; i++) {
+    		line += " ";
+    	}
+    	try {
+    	filler = new PrintWriter(new FileWriter(new File("rooms/arena.txt")));
+	    } catch (IOException e) {
+	    	System.out.println("File not found");
+	    }
+		for (int i = 0; i < 5 * rH; i++) {
+			filler.println(line);
+		}
+
+		filler.close();
+	}
+
+	public void openRoom() {
+
+		BufferedReader get = null;
+		try {
+			get = new BufferedReader(new FileReader("rooms/arena.txt"));
+		
+
+			for (int i = 0; i < (int)(roomStarts[roomNum][1] * rH); i++) {
+				get.readLine();
+			}
+			String line;
+			for (int i = 0; i < rH; i++) {
+				line = get.readLine();
+				for (int j = (int)(roomStarts[roomNum][0] * rW); j < (int)(roomStarts[roomNum][0] * rW) + rW; j++) {
+					System.out.println(j + " " + i);
+					room[j - (int)(roomStarts[roomNum][0] * rW)][i] = (int)(line.charAt(j) - 32);
+				}
+			}
+		}  catch (IOException e) {
+			System.out.println("File error");
+		}
+
+	}
+
+    public void writeMap() {
+    	try {
+    		BufferedReader firstGet = new BufferedReader(new FileReader("rooms/arena.txt"));
+
+    		String[] lines = new String[5 * rH];
+    		String line;
+    		int counter = 0;
+
+    		while ((line = firstGet.readLine()) != null ) {
+    			System.out.println(counter + "." + ((int)(roomStarts[roomNum][1] * rH)) + "." + ((int)(roomStarts[roomNum][1] * rH) + rH - 1) );
+    			if ((int)(roomStarts[roomNum][1] * rH) <= counter && (int)(roomStarts[roomNum][1] * rH) + rH - 1 >= counter) {
+    				//System.out.println(line.length());
+    				String bef = line.substring(0, (int)(roomStarts[roomNum][0] * rW));
+    				String aft = line.substring((int)(roomStarts[roomNum][0] * rW) + rW - 1, line.length() - 1);
+    				String mid = "";
+
+    				for (int i = 0; i < rW; i++) {
+    					System.out.println(counter + " " + (i) + " " + ((int)(roomStarts[roomNum][1] * rH) + counter));
+    					mid += (char)(room[i][counter - (int)(roomStarts[roomNum][1] * rH)] + 32);
+    					//mid += "" + roomNum;
+
+    				}
+    				System.out.println(bef + "." + mid + "." + aft);
+
+    				line = bef + mid + aft;
+    			}
+    			lines[counter] = line;
+    			counter += 1;
+    		}
+
+    		firstGet.close();
+    		PrintWriter filler = new PrintWriter(new FileWriter(new File("rooms/arena.txt")));
+    		for (int i = 0; i < lines.length; i++) {
+    			filler.println(lines[i]);
+    		}
+
+    		filler.close();
+    	} catch (IOException e) {
+    		System.out.println("File Error");
+    	}
+>>>>>>> c502748d99e4469d275f0ff7e40f8a6ea5f8a948:Light_Havoc/RoomBuilder.java
     	
     } 
 
