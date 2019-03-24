@@ -7,7 +7,7 @@ public class World {
 
 	private Player player;
 	private ArrayList<Projectile> projectiles;
-	// private ArrayList<Enemy> enemies;
+	private ArrayList<Enemy> enemies;
 
 	public World() {
 		player = new Player(worldWidth * 64 / 2, worldHeight * 64 / 2);
@@ -15,9 +15,14 @@ public class World {
 		enemies = new ArrayList<Enemy>();
 	}
 
-	//doEnemies here
+	public void moveEnemies() {
+		for (int i = enemies.size() - 1; i >= 0; i--) {
+			Enemy enemy = enemies.get(i);
+			enemy.move();
+		}
+	}
 
-	public void doProjectiles() {
+	public void moveProjectiles() {
 		for (int i = projectiles.size() - 1; i >= 0; i--) {
 			Projectile proj = projectiles.get(i);
 
