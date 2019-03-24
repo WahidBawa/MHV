@@ -15,8 +15,11 @@ public class LightHavoc extends JFrame implements ActionListener {
 	JPanel cards;
 	CardLayout cLayout = new CardLayout();
 
+	private ArrayList<JButton>buttonList;
+
 	javax.swing.Timer myTimer;
 	GamePanel game;
+	JPanel titlePage;
 
 	private int myTick; 
 
@@ -31,8 +34,20 @@ public class LightHavoc extends JFrame implements ActionListener {
 		myTimer = new javax.swing.Timer(10, this);	 // trigger every 10 ms
 		myTimer.start();
 
+		titlePage = new JPanel();
+		titlePage.setLayout(null);
+		
+		addButton("Play", titlePage, buttonList, 400, 460, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this); //adding buttons and text to all the non game cards
+		addButton("Instructions", titlePage, buttonList, 400, 570, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
+		addButton("Quit", titlePage, buttonList, 400, 680, 400, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
+		addImage("pics/gir.png", titlePage, 0, -50, 1200, 300);
+		addImage("pics/titleBack.jpg", titlePage, 0, 0, 1200, 850);
+
 		cards = new JPanel(cLayout);
+		cards.add(titlePage, "title");
 		cards.add(game, "game");
+
+		buttonList = new ArrayList<JButton>();
 				
 		add(cards);
 		setResizable(false);
@@ -54,6 +69,39 @@ public class LightHavoc extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
 		LightHavoc frame = new LightHavoc();
+    }
+
+    private static void addLabel(String text, Container container, int x, int y, int w, int h, int fontSize, String typeFace, Color textCol) { //adds a label
+        JLabel label = new JLabel(text);
+        label.setFont(new Font(typeFace, Font.PLAIN, fontSize));
+        label.setForeground(textCol);
+        label.setSize(w,h);
+		label.setLocation(x, y);
+
+        container.add(label);
+    }
+
+    public static void addImage(String fname, Container container, int x, int y, int w, int h) { 
+    	ImageIcon icon = new ImageIcon(fname);
+		JLabel label = new JLabel(icon);
+		label.setSize(w,h);
+		label.setLocation(x,y);
+		container.add(label);
+    }
+
+    private static void addButton(String text, Container container, ArrayList<JButton> blist, int x, int y, int w, int h, Color butCol,
+    								 int fontSize, String typeFace, Color textCol, LightHavoc lh) { 
+        JButton button = new JButton(text);
+        button.setFont(new Font(typeFace, Font.PLAIN, fontSize));
+        button.setForeground(textCol);
+        button.setBackground(butCol);
+        button.addActionListener(lh);
+
+		button.setSize(w, h);
+		button.setLocation(x, y);
+
+        container.add(button);
+        blist.add(button);
     }
 }
 
