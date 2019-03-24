@@ -8,6 +8,8 @@ import javax.imageio.*;
 
 import java.awt.image.*;
 import util.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 
 public class LightHavoc extends JFrame implements ActionListener {
 	JPanel cards;
@@ -75,11 +77,13 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		mb = new boolean[3];
 		screenPos = new Point(0, 0);
 
-		world = new World();
-		world.initTiles();
-
 		playerAng = - Math.PI / 2;
 		gunClass = "rifle";
+
+		world = new World(gunClass);
+		world.initTiles();
+
+		
 	}
 
     public void refresh(int myTick, Point pos){ 
@@ -129,20 +133,19 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	else if (m.x < 500 - 50) {playerAng -= Math.PI / 110;}
 
     	world.render(g, playerAng);
-    	drawUI(g);    	
+    	world.drawUI(g);    	
     } 
 
-    public void drawUI(Graphics g) {
+    public BufferedImage scaleBuffered(BufferedImage before, double s) {
+		int w = before.getWidth();
+		int h = before.getHeight();
+		BufferedImage after = new BufferedImage((int)(w * s), (int)(h * s), BufferedImage.TYPE_INT_ARGB);
+		AffineTransform at = new AffineTransform();
+		at.scale(s,s);
+		AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		after = scaleOp.filter(before, after);
 
-    	g.setColor(Color.BLACK);
-    	g.drawLine(400, 300, 400 + (int)(Math.cos(playerAng) * 50), 300 + (int)(Math.sin(playerAng) * 50));
-
-    	g.setColor(new Color(60, 0, 60));
-    	g.fillRect(800, 0, 200, 800);
-    	g.fillRect(0, 600, 1000, 200);
-
-    	g.setColor(Color.RED);
-    	g.drawRect(500 - 50, 600, 100, 200);
+		return after;
     }
 
 	public void keyTyped(KeyEvent e) {

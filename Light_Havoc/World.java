@@ -19,6 +19,7 @@ public class World {
 
 	private Player player;
 	private BufferedImage playerPic;
+	private String gunClass;
 	private ArrayList<Projectile> projectiles;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<util.Rectangle> walls;
@@ -27,8 +28,10 @@ public class World {
 	private BufferedImage[] tiles;
 	private int[][] map;
 
-	public World() {
+	public World(String gClass) {
+
 		player = new Player(3106, 1610);
+		gunClass = gClass;
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
 		walls = new ArrayList<util.Rectangle>();
@@ -93,9 +96,47 @@ public class World {
 			}
 		}
 
+		// for (int i = enemies.size() - 1; i >= 0; i--) {
+		// 	Enemy enemy = enemies.get(i);
+		// }
+
 		g.drawImage(rotateBuffered(player.getWeapon().getImage(), ang + Math.PI / 2, 32, 32), 400 - 32 + (int)(Math.cos(ang + Math.PI / 4) * 32 * Math.sqrt(2)), 300 - 32 + (int)(Math.sin(ang + Math.PI / 4) * 32 * Math.sqrt(2)), null);
 		g.drawImage(rotateBuffered(playerPic, ang + Math.PI / 2, 32, 32), 400 - 32, 300 - 32, null);
 	}
+
+	public void drawUI(Graphics g) {
+
+    	g.setColor(new Color(60, 0, 60));
+    	g.fillRect(800, 0, 200, 800);
+    	g.fillRect(0, 600, 1000, 200);
+
+    	g.setColor(Color.RED);
+    	g.drawRect(500 - 50, 600, 100, 200);
+
+    	g.setColor(Color.BLACK);
+    	g.fillRect(818 - 5, 42, 200 -36, 3 * 64 + 24);
+    	g.setColor(new Color(60, 0, 60));
+    	g.fillRect(818 - 5 + 5, 42 + 5, 200 - 36 - 10, 3 * 64 + 24 - 10);
+    	g.setColor(Color.BLACK);
+    	g.fillRect(810 - 5, 54, 180, 3 * 64);
+    	g.fillRect(830 - 5, 34, 140, 3 * 64 + 40);
+    	g.drawImage(scaleBuffered(player.getWeapon().getImage(), 3), 800 + (200 - 3 * 64) / 2, 50 + (200 - 3 * 64) / 2, null);
+
+    	g.setColor(Color.BLACK);
+    	g.fillRect(810 - 5 + 5, 275, 180 - 10, 30);
+    	g.fillRect(810 - 5, 275 + 5, 180, 30 - 10);
+    	g.setColor(Color.WHITE);
+    	g.setFont(new Font("TimesRoman", Font.BOLD, 20)); 
+    	g.drawString("Gun Type: " + gunClass, 834 - 5, 297);
+
+    	g.setColor(Color.BLACK);
+    	g.fillRect(810 - 5 + 5, 275 + 50, 180 - 10, 30);
+    	g.fillRect(810 - 5, 275 + 5 + 50, 180, 30 - 10);
+    	g.setColor(Color.WHITE);
+    	g.setFont(new Font("TimesRoman", Font.BOLD, 20)); 
+    	g.drawString("Gun Tier: " + player.getWeapon().getTier() + 1, 844 - 5, 297 + 50);
+    }
+
 
 	public void moveEnemies() {
 		for (int i = enemies.size() - 1; i >= 0; i--) {
@@ -146,6 +187,18 @@ public class World {
     	AffineTransform tx = AffineTransform.getRotateInstance(a, xrot, yrot);
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 	    BufferedImage after = op.filter(before, null);
+
+		return after;
+    }
+
+    public BufferedImage scaleBuffered(BufferedImage before, double s) {
+		int w = before.getWidth();
+		int h = before.getHeight();
+		BufferedImage after = new BufferedImage((int)(w * s), (int)(h * s), BufferedImage.TYPE_INT_ARGB);
+		AffineTransform at = new AffineTransform();
+		at.scale(s,s);
+		AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		after = scaleOp.filter(before, after);
 
 		return after;
     }
