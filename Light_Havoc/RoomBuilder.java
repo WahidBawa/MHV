@@ -199,7 +199,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		filler.close();
 	}
 
-<<<<<<< HEAD
 	public void openRoom() {
 
 		BufferedReader get = null;
@@ -223,13 +222,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		}
 
 	}
-=======
-	// public void open() {
-	// 	BufferedReader get = new BufferedReader(new FileReader("rooms/arena.txt"));
-
-	// 	for(int i = 0; i < )
-	// }
->>>>>>> d46dfa546a9036ca307c84b58c1f39faf32763b2
 
     public void writeMap() {
     	try {
