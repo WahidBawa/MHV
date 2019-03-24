@@ -86,6 +86,7 @@ public class LightHavoc extends JFrame implements ActionListener {
 		if(source == buttonList.get(0)){ 
 		    cLayout.show(cards,"game");
 		    game.reset();
+		    game.reset();
 			myTimer.start();
 		    game.requestFocus();
 		}
@@ -228,6 +229,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     		world.movePlayer(-6, 0);
     	}
 
+
 	}
 
 	@Override
@@ -284,6 +286,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     public void mousePressed(MouseEvent e){
     	if (e.getButton() == 1) {
     		world.useWeapon(playerAng);
+    		world.addSource();
     	}
 	}
 }

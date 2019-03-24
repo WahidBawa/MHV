@@ -150,6 +150,9 @@ public class World {
     	g.drawString("Gun Tier: " + player.getWeapon().getTierName() + 1, 844 - 5, 297 + 50);
     }
 
+    public void addSource() {
+    	sources.add(new int[]{player.getIntX(), player.getIntY(), 100, 100});
+    }
 
 	public void moveEnemies() {
 		double spawnChance = Math.max(20, 100 - kills*80);
@@ -240,7 +243,7 @@ public class World {
 		Graphics2D g2 = im.createGraphics();
 		g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, 800, 600);
-        
+        int[][] lighted = new int[800][600];
 		for (int i = sources.size() - 1; i >= 0; i--) {
 			int[] source = sources.get(i);
 			source[3] -= 1;
@@ -248,9 +251,12 @@ public class World {
 				g2.setColor(new Color(254, 254, 254));
 				for (int j = source[0] - (int)player.getX() + 400 - source[2]; j < source[0] - (int)player.getX() + 400 + source[2]; j++) {
 					for (int k = source[1] - (int)player.getY() + 300 - source[2]; k < source[1] - (int)player.getY() + 300 + source[2]; k++) {
-						if(Math.hypot(source[0] - player.getX() + 400 - j, source[1] - player.getY() + 300 - k) <= source[2]) {
-							if (j >= 0 && k >= 0 && j < 800 && k < 600) {
-								im.setRGB(j, k, 16711422);
+						if (j >= 0 && k >= 0 && j < 800 && k < 600) {
+							if (lighted[j][k] == 0) {
+								if(Math.hypot(source[0] - player.getX() + 400 - j, source[1] - player.getY() + 300 - k) <= source[2]) {
+									im.setRGB(j, k, 16711422);
+									lighted[j][k] = 1;
+								}
 							}
 						}
 					}
