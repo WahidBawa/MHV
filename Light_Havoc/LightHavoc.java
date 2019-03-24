@@ -131,7 +131,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
 		world = new World(gunClass);
 		world.initTiles();
-
 		
 	}
 
