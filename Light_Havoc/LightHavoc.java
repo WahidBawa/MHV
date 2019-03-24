@@ -185,7 +185,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	else if (m.x < 500 - 50) {playerAng -= Math.PI / 110;}
 
         playerAng += angle;
-
     	world.render(g, playerAng);
     	world.drawUI(g);    	
     } 
