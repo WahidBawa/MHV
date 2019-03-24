@@ -7,16 +7,18 @@ import java.io.*;
 import javax.imageio.*;
 
 import java.awt.image.*;
-import util.*;
 
 public class World {
 
 	private static final int worldWidth = 96;
 	private static final int worldHeight = 80;
 
+	// 6 - 22 WALLTILES
+
 	private Player player;
 	private ArrayList<Projectile> projectiles;
 	private ArrayList<Enemy> enemies;
+	private ArrayList<util.Rectangle> walls;
 
 	private ArrayList<String> imageFiles;
 	private BufferedImage[] tiles;
@@ -26,6 +28,7 @@ public class World {
 		player = new Player(worldWidth * 64 / 2, worldHeight * 64 / 2);
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
+		walls = new ArrayList<util.Rectangle>();
 	}
 
 	public void initTiles() {
@@ -47,7 +50,11 @@ public class World {
 			for (int i = 0; i < 5 * 10; i++) {
 				String line = get.readLine();
 				for (int j = 0; j < 6 * 16; j++) {
-					map[j][i] = line.charAt(j);
+					int n = line.charAt(j) - 32;
+					map[j][i] = n;
+					if (6 <= n && n <= 22) {
+						walls.add(new util.Rectangle(j*64, i*64, 64, 64));
+					}
 				}
 			}
 			
@@ -57,7 +64,6 @@ public class World {
 	}
 
 	public void render(Graphics g) {
-		
 
 		for (int i = projectiles.size() - 1; i >= 0; i--) {
 			Projectile proj = projectiles.get(i);
@@ -75,7 +81,7 @@ public class World {
 					g.setColor(Color.BLACK);
 					g.fillRect(j * 64 - player.getIntX() + 400, i * 64 - player.getIntY() + 300, 64, 64);
 				} else {
-					g.drawImage(tiles[map[j][i] - 32], j * 64 - player.getIntX() + 400, i * 64 - player.getIntY() + 300, null);
+					g.drawImage(tiles[map[j][i]], j * 64 - player.getIntX() + 400, i * 64 - player.getIntY() + 300, null);
 				}
 			}
 		}
@@ -92,6 +98,11 @@ public class World {
 		for (int i = projectiles.size() - 1; i >= 0; i--) {
 			Projectile proj = projectiles.get(i);
 			proj.move();
+			for (util.Rectangle w : walls) {
+				if (w.intersects(proj.getX() - proj.getRadius(), proj.getY() - proj.getRadius(), proj.getRadius(), proj.getRadius())) {
+					projectiles.remove(i);
+				}
+			}
 		}
 	}
 
@@ -104,20 +115,15 @@ public class World {
 
 	public void movePlayer(double dx, double dy) {
 		player.move(dx, dy);
-	}
+		for (util.Rectangle w : walls) {
+			if (w.intersects(player.getX() - 32, player.getY() - 32, 64, 64)) {
+				if (dx > 0) player.setX(w.getX() - 32);
+				else if (dx < 0) player.setX(w.getX() + w.getWidth() + 32);
 
-	public boolean collidesRooms(int x, int y) {
-		double[][] roomStarts = new double[][] {{0, 0.5}, {0, 3.5}, {1, 0}, {1, 1}, {1, 3}, 
-														{1, 4}, {1.5, 2}, {2, 0.5}, {2, 3.5}, {2.5, 1.5}, 
-														{2.5, 2.5}, {3, 0.5}, {3, 3.5}, {3.5, 2}, {4, 0}, 
-														{4, 1}, {4, 3}, {4, 4}, {5, 0.5}, {5, 3.5}};
-
-		for (int i = 0; i < 20; i++) {
-			if (roomStarts[i][0] * 16 * 64 <= x && x <= roomStarts[i][0] * 16 * 64 + 15 * 64 && roomStarts[i][1] * 10 * 64 <= y && y <= roomStarts[i][1] * 10 * 64 + 9 * 64) {
-				return true;
+				if (dy > 0) player.setY(w.getY() - 32);
+				else if (dy < 0) player.setY(w.getY() + w.getHeight() + 32);
 			}
 		}
-
-		return false;
+		System.out.println(player.getX() + " " + player.getY());
 	}
 }

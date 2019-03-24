@@ -14,8 +14,7 @@ public class LightHavoc extends JFrame implements ActionListener {
 	CardLayout cLayout = new CardLayout();
 
 	javax.swing.Timer myTimer;
-	GamePanel game; 
-
+	GamePanel game;
 
 	private int myTick; 
 
