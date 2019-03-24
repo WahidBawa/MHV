@@ -93,42 +93,23 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	if (keys[KeyEvent.VK_ESCAPE]) {
     		System.exit(0);
     	}
-        double x, y, x2, y2;
-        x = playerRotateVals[0];
-        y = playerRotateVals[1];
-        x2 = y2 = 0;
-        if (x > 0.5) {
-            x2 = 10;
-            y2 = 0;
-        } else if (x < -0.5){
-            x2 = -10;
-            y2 = 0;
-        }
 
-        if (y > 0.5){
-            y2 = 10;
-            x2 = 0;
-        }else if (y < -0.5) {
-            y2 = -10;
-            x2 = 0;
-        }
-        world.movePlayer(x2, y2);
-        // world.movePlayer(Math.min(4, Math.max(playerRotateVals[0] * 1.5, -4)), Math.min(4, Math.max(playerRotateVals[1] * 3, -4)));
+        world.movePlayer(Math.min(6, Math.max(playerRotateVals[0] * 2, -6)), Math.min(6, Math.max(playerRotateVals[1] * 4, -6)));
 
     	if (keys[KeyEvent.VK_W]) {
-    		world.movePlayer(0, -10);
+    		world.movePlayer(0, -6);
     	}
 
     	if (keys[KeyEvent.VK_S]) {
-    		world.movePlayer(0, 10);
+    		world.movePlayer(0, 6);
     	}
 
     	if (keys[KeyEvent.VK_D]) {
-    		world.movePlayer(10, 0);
+    		world.movePlayer(6, 0);
     	}
 
     	if (keys[KeyEvent.VK_A]) {
-    		world.movePlayer(-10, 0);
+    		world.movePlayer(-6, 0);
     	}
 
 	}
