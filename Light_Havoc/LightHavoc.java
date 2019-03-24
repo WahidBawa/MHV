@@ -66,6 +66,8 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
 	private World world;
 
+    public static double[] playerRotateVals;
+
 	public GamePanel(){
 		addKeyListener(this);
 		addMouseListener(this);
@@ -102,6 +104,11 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	if (keys[KeyEvent.VK_A]) {
     		world.movePlayer(-10, 0);
     	}
+
+        try {
+            playerRotateVals = new ReadFile("tmp.tmp").getArray();
+            System.out.println(Arrays.toString(playerRotateVals));
+        } catch (Exception e) {}
 	}
 
 	@Override
