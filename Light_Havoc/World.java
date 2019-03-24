@@ -119,7 +119,8 @@ public class World {
 			if (w.intersects(player.getX() - 32, player.getY() - 32, 64, 64)) {
 				if (dx > 0) player.setX(w.getX() - 32);
 				else if (dx < 0) player.setX(w.getX() + w.getWidth() + 32);
-
+			}
+			if (w.intersects(player.getX() - 32, player.getY() - 32, 64, 64)) {
 				if (dy > 0) player.setY(w.getY() - 32);
 				else if (dy < 0) player.setY(w.getY() + w.getHeight() + 32);
 			}
