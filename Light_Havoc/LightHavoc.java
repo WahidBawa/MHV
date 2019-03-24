@@ -69,6 +69,8 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 	private double playerAng;
 	private String gunClass;
 
+	private World world;
+
 	private final double[][] roomStarts = new double[][] {{0, 0.5}, {0, 3.5}, {1, 0}, {1, 1}, {1, 3}, 
 														{1, 4}, {1.5, 2}, {2, 0.5}, {2, 3.5}, {2.5, 1.5}, 
 														{2.5, 2.5}, {3, 0.5}, {3, 3.5}, {3.5, 2}, {4, 0}, 
@@ -80,6 +82,8 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		keys = new boolean[KeyEvent.KEY_LAST+1];
 		mb = new boolean[3];
 		screenPos = new Point(0, 0);
+
+		world = new World();
 
 		Filefetcher imageGetter = new Filefetcher();
 		imageFiles = imageGetter.showFiles(System.getProperty("user.dir") + "/environment");

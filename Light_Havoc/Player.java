@@ -8,9 +8,11 @@ public class Player extends Character{
 		y = yin;
 	}
 
-	public Projectile[] useWeapon() {
+	public Projectile[] useWeapon(double ang, double x, double y) {
 		if (weapon instanceof Rifle) {
-			return ((Rifle)weapon).fire();
+			return ((Rifle)weapon).use(ang, x, y);
+		} else {
+			return null;
 		}
 	}
 }

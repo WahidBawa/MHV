@@ -1,10 +1,10 @@
 public class Projectile {
 
 	private int rad, range;
-	private double vel, traj, x, , ox, oy, sx, sy;
+	private double vel, traj, x, y, ox, oy, sx, sy;
 	private String type;
 
-	public Projectile(double xin, double yin, double vin, double trin, Stirng tyin, double ranin, double radin) {
+	public Projectile(double xin, double yin, double vin, double trin, String tyin, int ranin, int radin) {
 		x = xin;
 		y = yin;
 		sx = xin;

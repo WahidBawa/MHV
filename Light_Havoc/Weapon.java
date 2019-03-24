@@ -1,6 +1,8 @@
+import java.awt.image.*;
+
 public class Weapon {
 
-	public Bufferedimage image;
+	public BufferedImage image;
 	
 	public Weapon() {}
 }
