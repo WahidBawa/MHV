@@ -83,12 +83,19 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 	}
 
     public void refresh(int myTick, Point pos){ 
+        try {
+            playerRotateVals = new ReadFile("tmp.tmp").getArray();
+            // System.out.println(Arrays.toString(playerRotateVals));
+        } catch (Exception e) {}
+
     	screenPos = pos;
     	importTick = myTick;
     	if (keys[KeyEvent.VK_ESCAPE]) {
     		System.exit(0);
     	}
 
+        world.movePlayer(Math.min(3, Math.max(playerRotateVals[0], -3)), playerRotateVals[1]);
+        System.out.println(Math.min(3, Math.max(playerRotateVals[0], -3)));
     	if (keys[KeyEvent.VK_W]) {
     		world.movePlayer(0, -10);
     	}
@@ -105,10 +112,6 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     		world.movePlayer(-10, 0);
     	}
 
-        try {
-            playerRotateVals = new ReadFile("tmp.tmp").getArray();
-            System.out.println(Arrays.toString(playerRotateVals));
-        } catch (Exception e) {}
 	}
 
 	@Override
@@ -122,8 +125,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	g.setColor(Color.BLACK);
     	g.fillRect(0, 0, 800, 600);
 
-    	if (m.x > 500 + 50) {playerAng += Math.PI / 150;}
-    	else if (m.x < 500 - 50) {playerAng -= Math.PI / 100;}
+    	// if (0if (m.x < 500 - 50) {playerAng -= Math.PI / 110;}
 
     	world.render(g);
     	drawUI(g);    	
