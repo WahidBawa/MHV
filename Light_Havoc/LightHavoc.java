@@ -204,6 +204,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
             pewing = a[3] == 0.0 ? false : true;
             if (ppewing != pewing && pewing) {
                 world.useWeapon(playerAng);
+                world.addSource();
             }
             // System.out.println(Arrays.toString(playerRotateVals));
         } catch (Exception e) {}

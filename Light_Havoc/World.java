@@ -31,6 +31,8 @@ public class World {
 
 	private ArrayList<int[]> sources;
 
+	private BufferedImage zombHead, zombArms;
+
 	public World(String gClass) {
 
 		player = new Player(3106, 1610);
@@ -41,10 +43,11 @@ public class World {
 
 		try {
 			 playerPic = ImageIO.read(new File("playerPic.png"));
+			 zombHead = ImageIO.read(new File("enemy/zombie_0.png"));
+			 zombArms = ImageIO.read(new File("enemy/zombie_1.png"));
 		} catch (IOException e) {System.out.println("Image not found");}
 
 		sources = new ArrayList<int[]>();
-		sources.add(new int []{player.getIntX(), player.getIntY(), 100, 999999});
 	}
 
 	public void initTiles() {
@@ -104,15 +107,17 @@ public class World {
 
 		for (int i = enemies.size() - 1; i >= 0; i--) {
 			Enemy enemy = enemies.get(i);
-			g.setColor(Color.BLUE);
-			g.fillOval((int)(enemy.getX() - player.getX() + 400f - 32), (int)(enemy.getY() - player.getY() + 300f - 32), 64, 64);
+			//g.fillOval((int)(enemy.getX() - player.getX() + 400f - 32), (int)(enemy.getY() - player.getY() + 300f - 32), 64, 64);
+			g.drawImage(rotateBuffered(zombHead, enemy.getAngle() + Math.PI / 2, 32, 32), (int)(enemy.getX() - player.getX() + 400f - 32), (int)(enemy.getY() - player.getY() + 300f - 32), null);
+			g.drawImage(rotateBuffered(zombArms, enemy.getAngle() + Math.PI / 2, 32, 32), (int)(enemy.getX() - player.getX() + 400f - 32), (int)(enemy.getY() - player.getY() + 300f - 32), null);
 			enemy.drawHealthBar(g, player);
+
 		}
 
 		g.drawImage(rotateBuffered(player.getWeapon().getImage(), ang + Math.PI / 2, 32, 32), 400 - 32 + (int)(Math.cos(ang + Math.PI / 4) * 32 * Math.sqrt(2)), 300 - 32 + (int)(Math.sin(ang + Math.PI / 4) * 32 * Math.sqrt(2)), null);
 		g.drawImage(rotateBuffered(playerPic, ang + Math.PI / 2, 32, 32), 400 - 32, 300 - 32, null);
 
-		g.drawImage(getLightMask(), 0, 0, null);
+		//g.drawImage(getLightMask(), 0, 0, null);
 
 		player.drawHealthBar(g, player);
 	}

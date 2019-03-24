@@ -10,6 +10,8 @@ public class Enemy extends Character{
 		y = yin;
 	}
 
+	public double getAngle() {return angle;}
+
 	public void update(Player player, ArrayList<util.Rectangle> walls) {
 		double dx = player.getX() - x;
 		double dy = player.getY() - y;
