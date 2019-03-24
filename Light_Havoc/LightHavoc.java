@@ -14,8 +14,7 @@ public class LightHavoc extends JFrame implements ActionListener {
 	CardLayout cLayout = new CardLayout();
 
 	javax.swing.Timer myTimer;
-	GamePanel game; 
-
+	GamePanel game;
 
 	private int myTick; 
 
@@ -67,6 +66,8 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
 	private World world;
 
+    public static double[] playerRotateVals;
+
 	public GamePanel(){
 		addKeyListener(this);
 		addMouseListener(this);
@@ -82,12 +83,19 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 	}
 
     public void refresh(int myTick, Point pos){ 
+        try {
+            playerRotateVals = new ReadFile("tmp.tmp").getArray();
+            // System.out.println(Arrays.toString(playerRotateVals));
+        } catch (Exception e) {}
+
     	screenPos = pos;
     	importTick = myTick;
     	if (keys[KeyEvent.VK_ESCAPE]) {
     		System.exit(0);
     	}
 
+        world.movePlayer(Math.min(3, Math.max(playerRotateVals[0], -3)), playerRotateVals[1]);
+        System.out.println(Math.min(3, Math.max(playerRotateVals[0], -3)));
     	if (keys[KeyEvent.VK_W]) {
     		world.movePlayer(0, -10);
     	}
@@ -103,6 +111,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	if (keys[KeyEvent.VK_A]) {
     		world.movePlayer(-10, 0);
     	}
+
 	}
 
 	@Override
@@ -116,8 +125,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	g.setColor(Color.BLACK);
     	g.fillRect(0, 0, 800, 600);
 
-    	if (m.x > 500 + 50) {playerAng += Math.PI / 150;}
-    	else if (m.x < 500 - 50) {playerAng -= Math.PI / 100;}
+    	// if (0if (m.x < 500 - 50) {playerAng -= Math.PI / 110;}
 
     	world.render(g);
     	drawUI(g);    	

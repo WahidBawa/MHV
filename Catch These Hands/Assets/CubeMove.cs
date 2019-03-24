@@ -19,10 +19,10 @@ public class CubeMove : MonoBehaviour
         {
             DataFetcher data = leftHand.GetComponent<DataFetcher>();
             this.transform.Translate((float)-data.roll / 800, 0, (float) data.pitch / 800);
-            System.IO.File.WriteAllText("../Light_Havoc/tmp.tmp", -data.roll + " " + data.pitch);
+            System.IO.File.WriteAllText("../Light_Havoc/tmp.tmp", -data.roll + "," + data.pitch);
         } else
         {
-            System.IO.File.WriteAllText("../Light_Havoc/tmp.tmp", "0.0 0.0");
+            System.IO.File.WriteAllText("../Light_Havoc/tmp.tmp", "0,0");
         }
 
     }

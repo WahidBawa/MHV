@@ -12,6 +12,8 @@ public class Player extends Character{
 
 	public double getX() { return x; }
 	public double getY() { return y; }
+	public void setX(double x) { this.x = x; }
+	public void setY(double y) { this.y = y; }
 	public int getIntX() { return (int)x; }
 	public int getIntY() { return (int)y; }
 
