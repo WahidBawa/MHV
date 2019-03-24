@@ -27,6 +27,7 @@ public class World {
 	private ArrayList<String> imageFiles;
 	private BufferedImage[] tiles;
 	private int[][] map;
+	private int kills;
 
 	public World(String gClass) {
 
@@ -139,6 +140,21 @@ public class World {
 
 
 	public void moveEnemies() {
+		double spawnChance = Math.max(20, 1000 - kills*80);
+		if ((int)(Math.random()*spawnChance) == 0) {
+			double x, y;
+			while (true) {
+				x = player.getX() + (Math.random()*2000 - 1000);
+				y = player.getY() + (Math.random()*2000 - 1000);
+				if (0 <= x && x <= 6*16*64 && 0 <= y && y <= 5*10*64 && Math.hypot(x, y) <= 1000) {
+					int t = map[(int)(y/64)][(int)(x/64)];
+					if (!(6 <= t && t <= 22)) {
+						break;
+					}
+				}
+			}
+			enemies.add(new Enemy(x, y));
+		}
 		for (int i = enemies.size() - 1; i >= 0; i--) {
 			Enemy enemy = enemies.get(i);
 			enemy.update(player);
