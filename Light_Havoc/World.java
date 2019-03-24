@@ -116,13 +116,12 @@ public class World {
 	public void movePlayer(double dx, double dy) {
 		player.move(dx, dy);
 		for (util.Rectangle w : walls) {
-			if (w.intersects(player.getX() - 32, player.getY() - 32, 64, 64)) {
-				if (dx > 0) player.setX(w.getX() - 32);
-				else if (dx < 0) player.setX(w.getX() + w.getWidth() + 32);
-			}
-			if (w.intersects(player.getX() - 32, player.getY() - 32, 64, 64)) {
-				if (dy > 0) player.setY(w.getY() - 32);
-				else if (dy < 0) player.setY(w.getY() + w.getHeight() + 32);
+			if (w.intersects(player.getX() - 32, player.getY() - 32, 64, 64)){
+				if (dx < 0) player.setX(w.getX() + w.getWidth() + 32 - dx);
+				else if (dx > 0) player.setX(w.getX() - 32 - dx);
+				
+				if (dy < 0) player.setY(w.getY() + w.getHeight() + 32 - dy);
+				else if (dy > 0) player.setY(w.getY() - 32 - dy);
 			}
 		}
 	}
