@@ -19,7 +19,7 @@ public class World {
 
 	private Player player;
 	private BufferedImage playerPic;
-	private String gunClass;
+	public static String gunClass;
 	private ArrayList<Projectile> projectiles;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<util.Rectangle> walls;
@@ -34,7 +34,7 @@ public class World {
 	public World(String gClass) {
 
 		player = new Player(3106, 1610);
-		gunClass = gClass;
+		// gunClass = gClass;
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
 		walls = new ArrayList<util.Rectangle>();
@@ -98,7 +98,7 @@ public class World {
 			
 			if (proj.getType().equals("bullet")) {
 				g.setColor(Color.BLACK);
-				g.fillOval(proj.getIntX() - player.getIntX() + 400 - proj.getRadius() / 2, proj.getIntY() - player.getIntY() + 300 - proj.getRadius() / 2, proj.getRadius(), proj.getRadius());
+				g.fillOval(proj.getIntX() - player.getIntX() + 400 - 8 / 2, proj.getIntY() - player.getIntY() + 300 - 8 / 2, 8, 8);
 			}
 		}
 
@@ -106,12 +106,15 @@ public class World {
 			Enemy enemy = enemies.get(i);
 			g.setColor(Color.BLUE);
 			g.fillOval((int)(enemy.getX() - player.getX() + 400f - 32), (int)(enemy.getY() - player.getY() + 300f - 32), 64, 64);
+			enemy.drawHealthBar(g, player);
 		}
 
 		g.drawImage(rotateBuffered(player.getWeapon().getImage(), ang + Math.PI / 2, 32, 32), 400 - 32 + (int)(Math.cos(ang + Math.PI / 4) * 32 * Math.sqrt(2)), 300 - 32 + (int)(Math.sin(ang + Math.PI / 4) * 32 * Math.sqrt(2)), null);
 		g.drawImage(rotateBuffered(playerPic, ang + Math.PI / 2, 32, 32), 400 - 32, 300 - 32, null);
 
 		g.drawImage(getLightMask(), 0, 0, null);
+
+		player.drawHealthBar(g, player);
 	}
 
 	public void drawUI(Graphics g) {
@@ -165,7 +168,7 @@ public class World {
 					}
 				// }
 			}
-			enemies.add(new Enemy(x, y));
+			enemies.add(new Enemy(x, y, kills));
 		}
 		for (int i = enemies.size() - 1; i >= 0; i--) {
 			Enemy enemy = enemies.get(i);
@@ -178,16 +181,20 @@ public class World {
 			Projectile proj = projectiles.get(i);
 			proj.move();
 			for (util.Rectangle w : walls) {
-				if (w.intersects(proj.getX() - proj.getRadius(), proj.getY() - proj.getRadius(), proj.getRadius(), proj.getRadius())) {
+				if (w.intersects(proj.getX() - 8, proj.getY() - 8, 8, 8)) {
 					projectiles.remove(i);
 					break;
 				}
 			}
 			for (int en = enemies.size() - 1; en >= 0; en--) {
 				Enemy e = enemies.get(en);
-				if ((new util.Rectangle(e.getX()-32, e.getY()-32, 64,64)).intersects(proj.getX() - proj.getRadius(), proj.getY() - proj.getRadius(), proj.getRadius(), proj.getRadius())) {
+				if ((new util.Rectangle(e.getX()-32, e.getY()-32, 64,64)).intersects(proj.getX() - 8, proj.getY() - 8, 8, 8)) {
 					projectiles.remove(i);
-					enemies.remove(en);
+					e.harm(proj.getDamage());
+					if (e.isDead()) {
+						enemies.remove(en);
+						kills++;
+					}
 					break;
 				}
 			}
@@ -202,6 +209,7 @@ public class World {
 	}
 
 	public void movePlayer(double dx, double dy) {
+		player.heal();
 		player.move(dx, 0);
 		for (util.Rectangle w : walls) {
 			if (w.intersects(player.getX() - 32, player.getY() - 32, 64, 64)){
@@ -215,6 +223,14 @@ public class World {
 			if (w.intersects(player.getX() - 32, player.getY() - 32, 64, 64)){
 				if (dy < 0) player.setY(w.getY() + w.getHeight() + 32);
 				else if (dy > 0) player.setY(w.getY() - 32);
+			}
+		}
+		for (Enemy e : enemies) {
+			if ((new util.Rectangle(e.getX() - 32, e.getY() - 32, 64, 64)).intersects(player.getX() - 32, player.getY() - 32, 64, 64)) {
+				double baseDamage = e.getHealthMax() * 0.1;
+				double damage = baseDamage * (0.5+e.percentHealth()/2);
+				player.harm(damage);
+				System.out.println(damage);
 			}
 		}
 	}

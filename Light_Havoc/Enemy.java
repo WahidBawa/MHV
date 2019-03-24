@@ -4,7 +4,8 @@ public class Enemy extends Character{
 
 	private double angle;
 
-	public Enemy(double xin, double yin) {
+	public Enemy(double xin, double yin, int kills) {
+		super(1+kills);
 		x = xin;
 		y = yin;
 	}

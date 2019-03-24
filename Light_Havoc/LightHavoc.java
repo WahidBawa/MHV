@@ -1,15 +1,13 @@
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
-
-import java.io.*;
 import javax.imageio.*;
 
 import java.awt.image.*;
 import util.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import javax.swing.*;
 
 public class LightHavoc extends JFrame implements ActionListener {
 	JPanel cards;
@@ -240,13 +238,13 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
     	g.setColor(Color.BLACK);
     	g.fillRect(0, 0, 800, 600);
-
+        
     	if (m.x > 500 + 50) {playerAng += Math.PI / 110;}
     	else if (m.x < 500 - 50) {playerAng -= Math.PI / 110;}
 
         playerAng += angle;
     	world.render(g, playerAng);
-    	world.drawUI(g);    	
+    	world.drawUI(g);
     } 
 
     public BufferedImage scaleBuffered(BufferedImage before, double s) {
