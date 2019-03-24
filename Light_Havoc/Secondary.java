@@ -1,6 +1,8 @@
+import java.awt.image.*;
+
 public class Secondary {
 
-	public Bufferedimage image;
+	private BufferedImage image;
 	
 	public Secondary() {}
 }
