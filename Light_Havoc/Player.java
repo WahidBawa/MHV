@@ -1,14 +1,19 @@
+import java.awt.*;
+
 public class Player extends Character{
 
 	private Weapon weapon;
 	private Secondary secondary;
 
 	public Player(double xin, double yin) {
+		super(100);
 		x= xin;
 		y = yin;
 
 		weapon = new Rifle(0);
 	}
+
+	public void heal() { health = Math.min(healthMax, health+0.01); }
 
 	public double getX() { return x; }
 	public double getY() { return y; }
