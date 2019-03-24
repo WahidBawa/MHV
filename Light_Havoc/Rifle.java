@@ -1,3 +1,7 @@
+import javax.imageio.*;
+import java.io.*;
+import java.awt.image.*;
+
 public class Rifle extends Weapon {
 
 	private int tier;
@@ -7,6 +11,11 @@ public class Rifle extends Weapon {
 	public Rifle (int tin) {
 
 		tier = tin;
+		image = null;
+		try {
+			 image = ImageIO.read(new File("weapons/weapon0" + tier + ".png"));
+		} catch (IOException e) {System.out.println("Image not found");}
+
 	}
 
 	public Projectile[] use(double ang, double x, double y) {
