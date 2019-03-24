@@ -19,7 +19,7 @@ public class Rifle extends Weapon {
 	}
 
 	public Projectile[] use(double ang, double x, double y) {
-		return new Projectile[] {new Projectile (x, y, 8, ang, "bullet", 500, 8)};
+		return new Projectile[] {new Projectile (x, y, 8, ang, "bullet", 500)};
 	}
 
 

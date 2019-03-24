@@ -1,10 +1,10 @@
 public class Projectile {
 
-	private int rad, range;
+	private int range;
 	private double vel, traj, x, y, ox, oy, sx, sy;
 	private String type;
 
-	public Projectile(double xin, double yin, double vin, double trin, String tyin, int ranin, int radin) {
+	public Projectile(double xin, double yin, double vin, double trin, String tyin, int damage) {
 		x = xin;
 		y = yin;
 		sx = xin;
@@ -14,8 +14,6 @@ public class Projectile {
 
 		vel = vin;
 		traj = trin;
-		range = ranin;
-		rad = radin;
 
 		type = tyin;
 	}
@@ -26,8 +24,7 @@ public class Projectile {
 	public double getSY() {return sy;}
 	public int getIntX() { return (int)x; }
 	public int getIntY() { return (int)y; }
-	public int getRadius() {return rad;}
-	public String getType() {return type;}
+	public String getType() {return type; }
 
 	public void move() {
 		ox = x;

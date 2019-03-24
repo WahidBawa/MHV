@@ -1,15 +1,13 @@
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
-
-import java.io.*;
 import javax.imageio.*;
 
 import java.awt.image.*;
 import util.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import javax.swing.*;
 
 public class LightHavoc extends JFrame implements ActionListener {
 	JPanel cards;
