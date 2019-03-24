@@ -100,7 +100,7 @@ public class World {
 		for (int i = enemies.size() - 1; i >= 0; i--) {
 			Enemy enemy = enemies.get(i);
 			g.setColor(Color.BLUE);
-			g.fillOval((int)(enemy.getX() - player.getX() + 400 - 32 / 2), (int)(enemy.getY() - player.getY() + 300 - 32 / 2), 32, 32);
+			g.fillOval((int)(enemy.getX() - player.getX() + 400f - 32), (int)(enemy.getY() - player.getY() + 300f - 32), 64, 64);
 		}
 
 		g.drawImage(rotateBuffered(player.getWeapon().getImage(), ang + Math.PI / 2, 32, 32), 400 - 32 + (int)(Math.cos(ang + Math.PI / 4) * 32 * Math.sqrt(2)), 300 - 32 + (int)(Math.sin(ang + Math.PI / 4) * 32 * Math.sqrt(2)), null);
@@ -152,7 +152,7 @@ public class World {
 				y = Math.random()*5*10*64 - 1;
 				// if (0 <= x && x <= 6*16*64 && 0 <= y && y <= 5*10*64) {
 					int t = map[(int)(x/64)][(int)(y/64)];
-					if (!(6 <= t && t <= 22)) {
+					if (!(6 <= t && t <= 22 && t == 0)) {
 						System.out.println("SPAWN");
 						break;
 					}
@@ -162,7 +162,7 @@ public class World {
 		}
 		for (int i = enemies.size() - 1; i >= 0; i--) {
 			Enemy enemy = enemies.get(i);
-			enemy.update(player);
+			enemy.update(player, walls);
 		}
 	}
 
