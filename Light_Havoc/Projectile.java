@@ -27,11 +27,13 @@ public class Projectile {
 	public int getIntX() { return (int)x; }
 	public int getIntY() { return (int)y; }
 	public int getRadius() {return rad;}
+	public String getType() {return type;}
 
 	public void move() {
 		ox = x;
 		oy = y;
+		System.out.println(vel);
 		x += Math.cos(traj) * vel;
-		y += Math.cos(traj) * vel;
+		y += Math.sin(traj) * vel;
 	}
 }

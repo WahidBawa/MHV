@@ -113,11 +113,20 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	Point m = MouseInfo.getPointerInfo().getLocation();
     	m.move(m.x - screenPos.x, m.y - screenPos.y);
 
+    	world.moveProjectiles();
+
     	g.setColor(Color.WHITE);
     	g.fillRect(0, 0, 800, 600);
 
     	if (m.x > 500 + 50) {playerAng += Math.PI / 150;}
     	else if (m.x < 500 - 50) {playerAng -= Math.PI / 100;}
+
+    	world.render(g);
+    	drawUI(g);    	
+    } 
+
+    public void drawUI(Graphics g) {
+
     	g.setColor(Color.BLACK);
     	g.drawLine(400, 300, 400 + (int)(Math.cos(playerAng) * 50), 300 + (int)(Math.sin(playerAng) * 50));
 
@@ -128,7 +137,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	g.setColor(Color.RED);
     	g.drawOval(400 - 20, 300 - 20, 40, 40);
     	g.drawRect(500 - 50, 600, 100, 200);
-    } 
+    }
 
 	public void keyTyped(KeyEvent e) {
 
@@ -150,7 +159,9 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     public void mouseClicked(MouseEvent e) {}
 
     public void mousePressed(MouseEvent e){
-
+    	if (e.getButton() == 1) {
+    		world.useWeapon(playerAng);
+    	}
 	}
 }
 
