@@ -134,7 +134,7 @@ public class World {
     	g.fillRect(810 - 5, 275 + 5 + 50, 180, 30 - 10);
     	g.setColor(Color.WHITE);
     	g.setFont(new Font("TimesRoman", Font.BOLD, 20)); 
-    	g.drawString("Gun Tier: " + player.getWeapon().getTier() + 1, 844 - 5, 297 + 50);
+    	g.drawString("Gun Tier: " + player.getWeapon().getTierName() + 1, 844 - 5, 297 + 50);
     }
 
 
