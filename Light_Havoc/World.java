@@ -141,7 +141,7 @@ public class World {
 	public void moveEnemies() {
 		for (int i = enemies.size() - 1; i >= 0; i--) {
 			Enemy enemy = enemies.get(i);
-			enemy.move(0, 0);
+			enemy.update(player);
 		}
 	}
 
