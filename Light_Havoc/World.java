@@ -25,7 +25,7 @@ public class World {
 	private int[][] map;
 
 	public World() {
-		player = new Player(25 * 64, 49 * 64);
+		player = new Player(worldWidth * 64 / 2, worldHeight * 64 / 2);
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
 		walls = new ArrayList<util.Rectangle>();
@@ -114,12 +114,17 @@ public class World {
 	}
 
 	public void movePlayer(double dx, double dy) {
-		player.move(dx, dy);
+		player.move(dx, 0);
 		for (util.Rectangle w : walls) {
 			if (w.intersects(player.getX() - 32, player.getY() - 32, 64, 64)){
 				if (dx < 0) player.setX(w.getX() + w.getWidth() + 32);
 				else if (dx > 0) player.setX(w.getX() - 32);
-				
+			}
+		}
+
+		player.move(0, dy);
+		for (util.Rectangle w : walls) {
+			if (w.intersects(player.getX() - 32, player.getY() - 32, 64, 64)){
 				if (dy < 0) player.setY(w.getY() + w.getHeight() + 32);
 				else if (dy > 0) player.setY(w.getY() - 32);
 			}
