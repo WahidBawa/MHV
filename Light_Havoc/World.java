@@ -12,7 +12,7 @@ public class World {
 	public World() {
 		player = new Player(worldWidth * 64 / 2, worldHeight * 64 / 2);
 		projectiles = new ArrayList<Projectile>();
-		//enemies = new ArrayList<Enemy>();
+		enemies = new ArrayList<Enemy>();
 	}
 
 	//doEnemies here
