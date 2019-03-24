@@ -124,6 +124,5 @@ public class World {
 				else if (dy < 0) player.setY(w.getY() + w.getHeight() + 32);
 			}
 		}
-		System.out.println(player.getX() + " " + player.getY());
 	}
 }
