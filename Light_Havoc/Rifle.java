@@ -13,7 +13,7 @@ public class Rifle extends Weapon {
 		type = "Rifle";
 		image = null;
 		try {
-			 image = ImageIO.read(new File("weapons/weapon0" + tier + 5 + ".png"));
+			 image = ImageIO.read(new File("weapons/weapon0" + (tier + 5) + ".png"));
 		} catch (IOException e) {System.out.println("Image not found");}
 
 	}

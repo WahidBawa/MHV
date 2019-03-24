@@ -34,7 +34,7 @@ public class World {
 	public World(String gClass) {
 
 		player = new Player(3106, 1610);
-		gunClass = gClass;
+		// gunClass = gClass;
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
 		walls = new ArrayList<util.Rectangle>();
