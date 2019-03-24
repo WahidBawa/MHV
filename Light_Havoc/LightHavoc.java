@@ -84,7 +84,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
 		playerAng = - Math.PI / 2;
 		gunClass = "rifle";
-
+;
 	}
 
     public void refresh(int myTick, Point pos){ 
