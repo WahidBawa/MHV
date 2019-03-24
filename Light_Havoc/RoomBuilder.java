@@ -86,9 +86,8 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		canDec = true;
 		canFilePlus = true;
 		canFileMinus = true;
-		roomNum = 2;
+		roomNum = 0;
 		holding = 1;
-
 
 		Filefetcher imageGetter = new Filefetcher();
 		imageFiles = imageGetter.showFiles(System.getProperty("user.dir") + "/environment");
@@ -142,6 +141,10 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 			writeMap();
 		}
 
+		if (keys[KeyEvent.VK_O]){
+			openRoom();
+		}
+
 		if (keys[KeyEvent.VK_Q] && keys[KeyEvent.VK_P]) {
 			wipeArena();
 		}
@@ -193,13 +196,27 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 	}
 
 	public void openRoom() {
-		BufferedReader get = new BufferedReader(new FileReader("rooms/arena.txt"));
 
-		for (int i = 0; i < (int)(roomStarts[roomNum][1] * rH)) {
-			get.readLine();
+		BufferedReader get = null;
+		try {
+			get = new BufferedReader(new FileReader("rooms/arena.txt"));
+		
+
+			for (int i = 0; i < (int)(roomStarts[roomNum][1] * rH); i++) {
+				get.readLine();
+			}
+			String line;
+			for (int i = 0; i < rH; i++) {
+				line = get.readLine();
+				for (int j = (int)(roomStarts[roomNum][0] * rW); j < (int)(roomStarts[roomNum][0] * rW) + rW; j++) {
+					System.out.println(j + " " + i);
+					room[j - (int)(roomStarts[roomNum][0] * rW)][i] = (int)(line.charAt(j) - 32);
+				}
+			}
+		}  catch (IOException e) {
+			System.out.println("File error");
 		}
-		String line;
-		for (int i = 0; i < rH)
+
 	}
 
     public void writeMap() {
