@@ -151,7 +151,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 	private Point screenPos;
 
 	private double playerAng, angle;
-
+    private boolean pewing, ppewing;
 	private String gunClass;
 
 	private World world;
@@ -195,7 +195,12 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
         try {
             double[] a = new ReadFile("tmp.tmp").getArray();
             playerRotateVals = new double[] {a[0], a[1]};
-            angle = -a[2] / 60;
+            angle = -a[2] / 30;
+            ppewing = pewing;
+            pewing = a[3] == 0.0 ? false : true;
+            if (ppewing != pewing && pewing) {
+                world.useWeapon(playerAng);
+            }
             // System.out.println(Arrays.toString(playerRotateVals));
         } catch (Exception e) {}
 
