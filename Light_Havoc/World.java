@@ -65,16 +65,6 @@ public class World {
 
 	public void render(Graphics g) {
 
-		for (int i = projectiles.size() - 1; i >= 0; i--) {
-			Projectile proj = projectiles.get(i);
-			Color c = null;
-			
-			if (proj.getType().equals("bullet")) {
-				g.setColor(Color.BLACK);
-				g.fillOval(proj.getIntX() - player.getIntX() + 400 - proj.getRadius() / 2, proj.getIntY() - player.getIntY() + 300 - proj.getRadius() / 2, proj.getRadius(), proj.getRadius());
-			}
-		}
-
 		for (int i = (player.getIntY() - 300) / 64; i < (player.getIntY() - 300) / 64 + 11; i++) {
 			for (int j = (player.getIntX() - 400) / 64; j < (player.getIntX() - 400) / 64 + 16; j++) {
 				if (i < 0 || j < 0 || j >= 16 * 6 || i >= 5 * 10) {
@@ -83,6 +73,16 @@ public class World {
 				} else {
 					g.drawImage(tiles[map[j][i]], j * 64 - player.getIntX() + 400, i * 64 - player.getIntY() + 300, null);
 				}
+			}
+		}
+
+		for (int i = projectiles.size() - 1; i >= 0; i--) {
+			Projectile proj = projectiles.get(i);
+			Color c = null;
+			
+			if (proj.getType().equals("bullet")) {
+				g.setColor(Color.BLACK);
+				g.fillOval(proj.getIntX() - player.getIntX() + 400 - proj.getRadius() / 2, proj.getIntY() - player.getIntY() + 300 - proj.getRadius() / 2, proj.getRadius(), proj.getRadius());
 			}
 		}
 	}
