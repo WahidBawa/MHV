@@ -33,7 +33,7 @@ public class Projectile {
 		y += Math.sin(traj) * vel;
 	}
 
-	public void getDamage(){
+	public int getDamage(){
 		return damage;
 	}
 }
