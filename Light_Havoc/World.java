@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class World {
 
 	private static final int worldWidth = 96;
