@@ -8,4 +8,7 @@ public class Character {
 		y += ymove;
 	}
 
+	public double getX() { return this.x; }
+	public double getY() { return this.y; }
+
 }

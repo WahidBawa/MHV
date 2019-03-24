@@ -14,7 +14,7 @@ public class ReadFile{ // this class will be used to read in a file
 		String[] s;
 		s = currLine.split(" "); // returns the array after splitting the lines String
 		String[] variable_name = s[0].split(","); // returns the array after splitting the lines String
-		System.out.println(Arrays.toString(s));
+		// System.out.println(Arrays.toString(s));
 		return new double[] {Double.parseDouble(variable_name[0]), Double.parseDouble(variable_name[1]), Double.parseDouble(s[1]), Double.parseDouble(s[2])};
 	}
 	

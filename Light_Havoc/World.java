@@ -97,9 +97,11 @@ public class World {
 			}
 		}
 
-		// for (int i = enemies.size() - 1; i >= 0; i--) {
-		// 	Enemy enemy = enemies.get(i);
-		// }
+		for (int i = enemies.size() - 1; i >= 0; i--) {
+			Enemy enemy = enemies.get(i);
+			g.setColor(Color.BLUE);
+			g.fillOval((int)(enemy.getX() - player.getX() + 400 - 32 / 2), (int)(enemy.getY() - player.getY() + 300 - 32 / 2), 32, 32);
+		}
 
 		g.drawImage(rotateBuffered(player.getWeapon().getImage(), ang + Math.PI / 2, 32, 32), 400 - 32 + (int)(Math.cos(ang + Math.PI / 4) * 32 * Math.sqrt(2)), 300 - 32 + (int)(Math.sin(ang + Math.PI / 4) * 32 * Math.sqrt(2)), null);
 		g.drawImage(rotateBuffered(playerPic, ang + Math.PI / 2, 32, 32), 400 - 32, 300 - 32, null);
@@ -140,18 +142,21 @@ public class World {
 
 
 	public void moveEnemies() {
-		double spawnChance = Math.max(20, 1000 - kills*80);
+		double spawnChance = Math.max(20, 100 - kills*80);
 		if ((int)(Math.random()*spawnChance) == 0) {
 			double x, y;
 			while (true) {
-				x = player.getX() + (Math.random()*2000 - 1000);
-				y = player.getY() + (Math.random()*2000 - 1000);
-				if (0 <= x && x <= 6*16*64 && 0 <= y && y <= 5*10*64 && Math.hypot(x, y) <= 1000) {
-					int t = map[(int)(y/64)][(int)(x/64)];
+				// x = player.getX() + (Math.random()*2000 - 1000);
+				// y = player.getY() + (Math.random()*2000 - 1000);
+				x = Math.random()*6*16*64 - 1;
+				y = Math.random()*5*10*64 - 1;
+				// if (0 <= x && x <= 6*16*64 && 0 <= y && y <= 5*10*64) {
+					int t = map[(int)(x/64)][(int)(y/64)];
 					if (!(6 <= t && t <= 22)) {
+						System.out.println("SPAWN");
 						break;
 					}
-				}
+				// }
 			}
 			enemies.add(new Enemy(x, y));
 		}
@@ -168,6 +173,15 @@ public class World {
 			for (util.Rectangle w : walls) {
 				if (w.intersects(proj.getX() - proj.getRadius(), proj.getY() - proj.getRadius(), proj.getRadius(), proj.getRadius())) {
 					projectiles.remove(i);
+					break;
+				}
+			}
+			for (int en = enemies.size() - 1; en >= 0; en--) {
+				Enemy e = enemies.get(en);
+				if ((new util.Rectangle(e.getX()-32, e.getY()-32, 64,64)).intersects(proj.getX() - proj.getRadius(), proj.getY() - proj.getRadius(), proj.getRadius(), proj.getRadius())) {
+					projectiles.remove(i);
+					enemies.remove(en);
+					break;
 				}
 			}
 		}

@@ -236,6 +236,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     	m.move(m.x - screenPos.x, m.y - screenPos.y);
 
     	world.moveProjectiles();
+        world.moveEnemies();
 
     	g.setColor(Color.BLACK);
     	g.fillRect(0, 0, 800, 600);
