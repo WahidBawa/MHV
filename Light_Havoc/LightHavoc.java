@@ -189,7 +189,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     		System.exit(0);
     	}
 
-        //world.movePlayer(Math.min(6, Math.max(playerRotateVals[0] * 2, -6)), Math.min(6, Math.max(playerRotateVals[1] * 4, -6)));
+        world.movePlayer(Math.min(6, Math.max(playerRotateVals[0] * 2, -6)), Math.min(6, Math.max(playerRotateVals[1] * 4, -6)));
 
     	if (keys[KeyEvent.VK_W]) {
     		world.movePlayer(0, -6);
