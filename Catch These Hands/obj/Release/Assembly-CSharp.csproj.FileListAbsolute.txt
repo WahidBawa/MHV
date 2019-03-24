@@ -1,0 +1,2 @@
+C:\Users\wahid\Documents\GitHub\MHV\Catch These Hands\obj\Release\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\wahid\Documents\GitHub\MHV\Catch These Hands\obj\Release\Assembly-CSharp.csproj.CoreCompileInputs.cache
