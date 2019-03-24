@@ -1,4 +1,4 @@
-public class Rifle {
+public class Rifle extends Weapon {
 
 	private int tier;
 	private final int[] DAMAGE = new int[] {0, 0, 0, 0, 0};
