@@ -20,6 +20,7 @@ public class CubeMove : MonoBehaviour
             DataFetcher data = leftHand.GetComponent<DataFetcher>();
             this.transform.Translate((float)-data.roll / 800, 0, (float) data.pitch / 800);
         }
+        System.IO.File.WriteAllText("../Light_Havoc/tmp.tmp", "testing one two three");
 
     }
 }
