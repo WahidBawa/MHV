@@ -47,6 +47,19 @@ public class LightHavoc extends JFrame implements ActionListener {
 		instr = new JPanel();
 		instr.setLayout(null);
 
+		addButton("Back", instr, buttonList, 50, 650, 150, 100, Color.BLACK, 40, "Cooper Black", Color.WHITE, this);
+		String[] lines = new String[] {"Hold your hands out flat above the sensor. if hands are not detected, the game will pause", 
+										"Rotate your torso and hands to rotate the player",
+										"Bank your left hand side to side and front to back to move the player",
+										"Hold your right hand in the shape of a gun and bend your pointer finger to shoot",
+										"Survive as long as you can!"};
+		for (int i = 0; i < lines.length; i++) {
+			addLabel(lines[i], instr, 75, 200 + i * (400 / lines.length), 900, 400 / lines.length, 18, "Cooper Black", Color.WHITE);
+		}
+
+		addImage("purpRect.png", instr, 50, 200, 900, 400);
+		addImage("titlePic.png", instr, 0, 0, 1000, 800);
+
 		cards = new JPanel(cLayout);
 		cards.add(titlePage, "title");
 		cards.add(game, "game");
@@ -82,7 +95,15 @@ public class LightHavoc extends JFrame implements ActionListener {
 
 		if(source == buttonList.get(2)){ 
 		    System.exit(0);
-		}	
+		}
+
+		try {
+			if(source == buttonList.get(3)){ 
+			    cLayout.show(cards,"title");
+			}
+		} catch(Exception e) {
+			System.out.print("");
+		}
 	}
 
     public static void main(String[] args) {
