@@ -7,7 +7,7 @@ import java.io.*;
 import javax.imageio.*;
 
 import java.awt.image.*;
-
+import util.*;
 
 public class RoomBuilder extends JFrame implements ActionListener {
 	JPanel cards;
@@ -60,7 +60,7 @@ public class RoomBuilder extends JFrame implements ActionListener {
 
 class GamePanel extends JPanel implements MouseListener, KeyListener{
 
-	private boolean[] keys; 
+	private boolean[] keys, mb;
 	private int importTick, holding, roomNum;
 	private int[][] room;
 	private boolean canInc, canDec, canFilePlus, canFileMinus;
@@ -80,6 +80,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		addKeyListener(this);
 		addMouseListener(this);
 		keys = new boolean[KeyEvent.KEY_LAST+1];
+		mb = new boolean[3];
 
 		room = new int[rW][rH];
 		canInc = true;
@@ -104,6 +105,9 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 
     public void refresh(int myTick){ 
     	importTick = myTick;
+    	if (keys[KeyEvent.VK_ESCAPE]) {
+    		System.exit(0);
+    	}
 
 		if (keys[KeyEvent.VK_RIGHT]){
 			if (canInc) {
@@ -192,11 +196,11 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
 		filler.close();
 	}
 
-	public void open() {
-		BufferedReader get = new BufferedReader(new FileReader("rooms/arena.txt"));
+	// public void open() {
+	// 	BufferedReader get = new BufferedReader(new FileReader("rooms/arena.txt"));
 
-		for(int i = 0; i < )
-	}
+	// 	for(int i = 0; i < )
+	// }
 
     public void writeMap() {
     	try {
@@ -268,7 +272,7 @@ class GamePanel extends JPanel implements MouseListener, KeyListener{
     public void mouseClicked(MouseEvent e) {}
 
     public void mousePressed(MouseEvent e){
-    	if (e.getX() / 64 < rW && e.getY() / 64 < rH) {
+    	if (e.getButton() == 1 && e.getX() / 64 < rW && e.getY() / 64 < rH) {
     		room[(int)e.getX() / 64][(int)e.getY() / 64] = holding;
 
     	}
